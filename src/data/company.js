@@ -17,12 +17,13 @@ export const company = {
   ],
   media: {
     heroVideos: [
+      'https://pixabay.com/videos/download/video-91744_large.mp4',
       'https://www.pexels.com/download/video/4914009/',
       'https://www.pexels.com/download/video/12122308/',
       'https://www.pexels.com/download/video/4786843/',
       'https://assets.mixkit.co/videos/preview/mixkit-flying-slowly-over-a-big-city-49806-large.mp4',
       'https://assets.mixkit.co/videos/preview/mixkit-aerial-tour-of-a-big-city-at-dusk-49869-large.mp4'
     ],
-    heroVideoPage: 'https://www.pexels.com/video/drone-footage-of-a-city-skyline-4914009/'
+    heroVideoPage: 'https://pixabay.com/videos/skyscrapers-buildings-city-urban-91744/'
   }
 };
