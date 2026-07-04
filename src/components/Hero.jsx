@@ -9,6 +9,7 @@ import { company } from '../data/company';
 export default function Hero() {
   const { t } = useTranslation();
   const [activeVideo, setActiveVideo] = useState(0);
+  const [videoFailed, setVideoFailed] = useState(false);
   const heroVideo = company.media.heroVideos[Math.min(activeVideo, company.media.heroVideos.length - 1)];
 
   return (
@@ -27,11 +28,24 @@ export default function Hero() {
         initial={{ scale: 1.06 }}
         animate={{ scale: 1.01 }}
         transition={{ duration: 6, ease: 'easeOut' }}
-        onError={() => setActiveVideo((index) => (index < company.media.heroVideos.length - 1 ? index + 1 : index))}
+        onError={() => {
+          if (activeVideo < company.media.heroVideos.length - 1) {
+            setActiveVideo((index) => index + 1);
+          } else {
+            setVideoFailed(true);
+          }
+        }}
         onCanPlay={(event) => {
           event.currentTarget.play().catch(() => {});
         }}
       />
+      {videoFailed && (
+        <div className="absolute inset-0 grid place-items-center bg-dark px-6 text-center">
+          <p className="max-w-md text-sm font-semibold uppercase tracking-[0.14em] text-white/58">
+            Pixabay video is blocked by the source server. Add a local MP4 file to public/videos for guaranteed playback.
+          </p>
+        </div>
+      )}
       <div className="absolute inset-0 bg-dark/38" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_42%,rgba(180,138,90,0.16),transparent_30%),linear-gradient(to_top,#111_4%,rgba(17,17,17,0.22)_48%,rgba(17,17,17,0.66)_100%)]" />
       <motion.div
