@@ -55,7 +55,7 @@ const contactApiPlugin = (env) => ({
 
       try {
         const apiKey = env.RESEND_API_KEY;
-        const to = env.CONTACT_TO_EMAIL || 'info@dreamspace.in';
+        const to = env.CONTACT_TO_EMAIL || 'dreamspaceliaisoning@gmail.com';
         const from = env.CONTACT_FROM_EMAIL || 'Dreamspace <onboarding@resend.dev>';
         const data = await readJsonBody(request);
 

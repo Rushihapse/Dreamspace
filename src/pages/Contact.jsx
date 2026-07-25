@@ -3,6 +3,7 @@ import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
 import SeoTags from '../components/SeoTags';
+import ThankYouModal from '../components/ThankYouModal';
 import { company } from '../data/company';
 import { services } from '../data/services';
 
@@ -17,6 +18,7 @@ export default function Contact() {
   const { t } = useTranslation();
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,7 +45,8 @@ export default function Contact() {
       }
 
       setStatus('success');
-      setMessage(t('contact.success'));
+      setMessage('');
+      setShowThankYou(true);
       form.reset();
     } catch (error) {
       setStatus('error');
@@ -89,14 +92,8 @@ export default function Contact() {
               >
                 {status === 'sending' ? 'Sending...' : 'Submit Enquiry'}
               </button>
-              {message && (
-                <p
-                  className={`border p-4 text-sm font-semibold ${
-                    status === 'success' ? 'border-gold/40 bg-gold/10 text-dark' : 'border-red-500/35 bg-red-500/10 text-red-900'
-                  }`}
-                  role="status"
-                  aria-live="polite"
-                >
+              {status === 'error' && message && (
+                <p className="border border-red-500/35 bg-red-500/10 p-4 text-sm font-semibold text-red-900" role="status" aria-live="polite">
                   {message}
                 </p>
               )}
@@ -133,6 +130,12 @@ export default function Contact() {
           </div>
         </div>
       </section>
+      <ThankYouModal
+        open={showThankYou}
+        onClose={() => setShowThankYou(false)}
+        title="Thank You"
+        message={t('contact.success')}
+      />
     </>
   );
 }
