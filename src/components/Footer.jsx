@@ -17,7 +17,8 @@ export default function Footer() {
     <footer className="bg-dark py-14 text-white sm:py-20">
       <div className="container-page grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
-          <p className="serif-heading text-3xl tracking-[0.12em]">DREAMSPACE</p>
+          <p className="serif-heading text-3xl tracking-[0.12em]">{company.shortName}</p>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-gold">{company.name}</p>
           <p className="mt-4 max-w-md text-sm leading-7 text-white/65">{t('footer.text')}</p>
           <p className="mt-8 text-xs uppercase tracking-[0.18em] text-gold">Founder: {company.founder}</p>
         </div>
@@ -46,8 +47,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="container-page mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs uppercase tracking-[0.14em] text-white/45 sm:flex-row sm:items-center sm:justify-between">
-        <p>© 2026 DREAMSPACE</p>
-        <p>Architects | Planning | Liaisoning</p>
+        <p>&copy; 2026 {company.name}</p>
+        <p>{company.tagline}</p>
       </div>
     </footer>
   );

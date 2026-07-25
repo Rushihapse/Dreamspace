@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { company } from '../data/company';
 
 export default function CTASection({ title, text, buttonText }) {
   const { t } = useTranslation();
@@ -9,7 +10,7 @@ export default function CTASection({ title, text, buttonText }) {
     <section className="bg-charcoal py-16 text-white sm:py-24">
       <div className="container-page grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
         <div className="max-w-3xl">
-          <p className="eyebrow">DREAMSPACE</p>
+          <p className="eyebrow">{company.shortName}</p>
           <h2 className="serif-heading mt-3 text-4xl font-semibold leading-tight sm:text-6xl">{title || t('cta.title')}</h2>
           <p className="mt-5 max-w-2xl text-base leading-8 text-white/68">{text || t('cta.text')}</p>
         </div>

@@ -1,6 +1,7 @@
 export const company = {
-  name: 'DREAMSPACE',
-  tagline: 'Architects | Planning | Liaisoning',
+  name: 'Dreamspace Infrastructure & Liaisoning Pvt Ltd',
+  shortName: 'DREAMSPACE',
+  tagline: 'Infrastructure | Liaisoning | Planning | Real Estate',
   founder: 'A. D. Chougule',
   founderTitle: 'Founder & Principal Consultant',
   phones: ['+91 87672 81874', '+91 91307 12555'],
@@ -8,17 +9,26 @@ export const company = {
   email: 'info@dreamspace.in',
   address: 'Shop No-10, Ground Floor, Shreeji Terrace Apartment, Purnanagar, Chikhali, Pradhikaran, Pune',
   region: 'Pune, Maharashtra',
-  authorities: ['PMRDA', 'PCMC', 'PMC', 'MSRDC'],
+  authorities: ['PMRDA', 'PCMC', 'PMC', 'MIDC', 'MSRDC'],
   cardServices: [
-    'Architectural Design & Planning',
-    'Liaisoning & Approval Services',
-    'Building Permissions & Documentation',
-    'NA Plot Conversion & Consultancy'
+    'Architecture & Design Services',
+    'Planning & Regulatory Approvals',
+    'Liaisoning & Compliance Services',
+    'Real Estate & Property Advisory',
+    'Land Development & Infrastructure Planning',
+    'Project Management & Construction Support'
   ],
+  mission:
+    'To provide end-to-end solutions that simplify every stage of the property lifecycle by combining architectural expertise, planning, regulatory approvals, real estate consultancy, property management and investment guidance under one trusted brand.',
+  vision:
+    'To establish Dreamspace Infrastructure & Liaisoning Pvt Ltd as a trusted and innovative organization delivering integrated architecture, planning, liaisoning, real estate and property solutions through professional excellence, transparency and sustainable development.',
   media: {
     heroVideos: [
-      'https://pixabay.com/videos/download/video-91744_large.mp4'
+      'https://videos.pexels.com/video-files/11027235/11027235-hd_3840_2160_25fps.mp4',
+      'https://videos.pexels.com/video-files/6950317/6950317-uhd_3840_2160_30fps.mp4',
+      'https://videos.pexels.com/video-files/34575802/14651405_3840_2160_50fps.mp4',
+      'https://videos.pexels.com/video-files/32636393/13916896_3840_2160_30fps.mp4'
     ],
-    heroVideoPage: 'https://pixabay.com/videos/skyscrapers-buildings-city-urban-91744/'
+    heroVideoPage: 'https://www.pexels.com/video/drone-shot-of-modern-city-11027235/'
   }
 };

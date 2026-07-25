@@ -9,7 +9,6 @@ import { company } from '../data/company';
 export default function Hero() {
   const { t } = useTranslation();
   const [activeVideo, setActiveVideo] = useState(0);
-  const [videoFailed, setVideoFailed] = useState(false);
   const heroVideo = company.media.heroVideos[Math.min(activeVideo, company.media.heroVideos.length - 1)];
 
   return (
@@ -31,21 +30,12 @@ export default function Hero() {
         onError={() => {
           if (activeVideo < company.media.heroVideos.length - 1) {
             setActiveVideo((index) => index + 1);
-          } else {
-            setVideoFailed(true);
           }
         }}
         onCanPlay={(event) => {
           event.currentTarget.play().catch(() => {});
         }}
       />
-      {videoFailed && (
-        <div className="absolute inset-0 grid place-items-center bg-dark px-6 text-center">
-          <p className="max-w-md text-sm font-semibold uppercase tracking-[0.14em] text-white/58">
-            Pixabay video is blocked by the source server. Add a local MP4 file to public/videos for guaranteed playback.
-          </p>
-        </div>
-      )}
       <div className="absolute inset-0 bg-dark/38" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_42%,rgba(180,138,90,0.16),transparent_30%),linear-gradient(to_top,#111_4%,rgba(17,17,17,0.22)_48%,rgba(17,17,17,0.66)_100%)]" />
       <motion.div
@@ -68,7 +58,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            City-scale Architecture Studio
+            Integrated Infrastructure & Liaisoning Studio
           </motion.p>
           <h1 className="serif-heading text-5xl font-semibold leading-[0.98] sm:text-7xl lg:text-8xl">
             <AnimatedText>{t('home.hero.title1')}</AnimatedText>
@@ -125,7 +115,7 @@ export default function Hero() {
         <ArrowDown size={16} />
       </div>
       <div className="absolute bottom-7 left-6 hidden text-[0.66rem] font-bold uppercase tracking-[0.18em] text-white/50 sm:block">
-        City Skyline / Architecture / Planning / Liaisoning
+        Urban Infrastructure / Planning / Liaisoning / Real Estate
       </div>
     </section>
   );

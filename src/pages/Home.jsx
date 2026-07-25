@@ -18,7 +18,7 @@ import { blogs } from '../data/blogs';
 import { company } from '../data/company';
 
 const process = ['Understand Requirement', 'Site & Document Study', 'Concept & Planning', 'Approval Support', 'Execution Guidance'];
-const values = ['Clarity', 'Compliance', 'Design Quality', 'Timely Coordination'];
+const values = ['Clarity', 'Compliance', 'Professional Excellence', 'Transparent Coordination'];
 
 export default function Home() {
   const { t } = useTranslation();
@@ -26,8 +26,8 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>DREAMSPACE | Architects, Planning and Liaisoning</title>
-        <meta name="description" content="Dreamspace provides premium architecture, planning and liaisoning solutions in Maharashtra, India." />
+        <title>Dreamspace Infrastructure & Liaisoning Pvt Ltd | Planning, Liaisoning and Real Estate</title>
+        <meta name="description" content="Dreamspace Infrastructure & Liaisoning Pvt Ltd provides integrated architecture, planning approvals, liaisoning, real estate consultancy and property lifecycle solutions in Pune and Maharashtra." />
       </Helmet>
       <Hero />
 
@@ -85,7 +85,7 @@ export default function Home() {
               From city skyline to site file, every project needs a clear path.
             </h2>
             <p className="mt-6 max-w-2xl text-base leading-8 text-white/70 sm:text-lg">
-              Dreamspace connects architectural ambition with permission strategy, documentation and authority coordination for projects that need both vision and discipline.
+              Dreamspace connects architecture, planning approvals, liaisoning, real estate advisory and property management for projects that need both vision and discipline.
             </p>
             <div className="mt-8 grid max-w-xl grid-cols-2 gap-3 sm:grid-cols-4">
               {company.authorities.map((authority) => (
@@ -155,7 +155,7 @@ export default function Home() {
               Premium design backed by permission strategy and documentation control.
             </h2>
             <p className="mt-6 text-base leading-8 text-white/68 sm:text-lg">
-              Dreamspace blends visual design, municipal logic and on-ground coordination so projects look refined while staying approval-ready.
+              Dreamspace blends design, regulatory logic, real estate insight and on-ground coordination so projects stay refined, feasible and approval-ready.
             </p>
           </motion.div>
         </div>
@@ -169,7 +169,7 @@ export default function Home() {
         <div className="container-page relative grid gap-10 lg:grid-cols-[0.8fr_1fr] lg:items-end">
           <div>
             <p className="eyebrow">Authority Coordination</p>
-            <h2 className="serif-heading mt-3 text-4xl font-semibold leading-tight sm:text-6xl">PMRDA, PCMC, PMC and MSRDC approval paths handled with discipline.</h2>
+            <h2 className="serif-heading mt-3 text-4xl font-semibold leading-tight sm:text-6xl">PMRDA, PCMC, PMC, MIDC and MSRDC approval paths handled with discipline.</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {company.authorities.map((authority) => (
@@ -211,7 +211,7 @@ export default function Home() {
       <section className="py-16 sm:py-24">
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center">
           <div>
-            <SectionTitle eyebrow={t('home.values.kicker')} title={t('home.values.title')} text="Dreamspace keeps the approval journey grounded, the design language refined and the client communication direct." />
+            <SectionTitle eyebrow={t('home.values.kicker')} title={t('home.values.title')} text="Dreamspace keeps the approval journey grounded, the property strategy clear and the client communication direct." />
             <div className="grid gap-4 sm:grid-cols-2">
               {values.map((value) => (
                 <div key={value} className="border border-dark/12 bg-white p-6">

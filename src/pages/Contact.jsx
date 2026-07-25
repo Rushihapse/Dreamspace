@@ -4,11 +4,13 @@ import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
 import { company } from '../data/company';
+import { services } from '../data/services';
 
 const faqs = [
-  ['Can I contact Dreamspace before buying land?', 'Yes. Early feasibility and document review can help you avoid planning surprises.'],
-  ['Do you handle approval coordination?', 'Dreamspace supports documentation, planning guidance and liaisoning coordination for relevant permissions.'],
-  ['Do you work outside Maharashtra?', 'The current focus is Maharashtra, India, with project-specific consultation possible after review.']
+  ['Can I contact Dreamspace before buying land or property?', 'Yes. Early feasibility, document review and advisory support can help you avoid planning, approval and investment surprises.'],
+  ['Do you handle approval and liaisoning coordination?', 'Dreamspace supports documentation, planning guidance, authority coordination and compliance follow-up for relevant permissions.'],
+  ['Can you support property management or leasing after a project?', 'Yes. The company scope includes rental, leasing, tenant coordination, property management and long-term property advisory.'],
+  ['Do you work outside Maharashtra?', 'The current focus is Pune and Maharashtra, with project-specific consultation possible after review.']
 ];
 
 export default function Contact() {
@@ -52,8 +54,8 @@ export default function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact | DREAMSPACE</title>
-        <meta name="description" content="Contact Dreamspace for architecture, planning, liaisoning and project consultation in Maharashtra, India." />
+        <title>Contact | Dreamspace Infrastructure & Liaisoning Pvt Ltd</title>
+        <meta name="description" content="Contact Dreamspace Infrastructure & Liaisoning Pvt Ltd for architecture, approvals, liaisoning, real estate consultancy and property lifecycle support in Maharashtra, India." />
       </Helmet>
       <PageHeader title={t('contact.title')} subtitle={t('contact.subtitle')} image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85" />
       <section className="py-16 sm:py-24">
@@ -70,16 +72,14 @@ export default function Contact() {
               <label className="grid gap-2 text-sm font-semibold">
                 Service Interest
                 <select name="service" className="focus-ring border border-dark/15 bg-bg px-4 py-4 text-sm">
-                  <option>Architectural Design</option>
-                  <option>Planning & Permissions</option>
-                  <option>Liaisoning Services</option>
-                  <option>Zone Change & Conversion</option>
-                  <option>Project Consultation</option>
+                  {services.map((service) => (
+                    <option key={service.slug} value={service.title.en}>{service.title.en}</option>
+                  ))}
                 </select>
               </label>
               <label className="grid gap-2 text-sm font-semibold">
                 Message
-                <textarea name="message" rows="6" className="focus-ring resize-none border border-dark/15 bg-bg px-4 py-4 text-sm" placeholder="Tell us about site, requirement and timeline." />
+                <textarea name="message" rows="6" className="focus-ring resize-none border border-dark/15 bg-bg px-4 py-4 text-sm" placeholder="Tell us about the land, property, approval, design or management requirement." />
               </label>
               <button
                 type="submit"

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { company } from '../data/company';
 
 const routeVisuals = [
   {
@@ -129,11 +130,11 @@ export default function CinematicRouteTransition({ pathname }) {
 
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-[0.62rem] font-bold uppercase tracking-[0.22em] text-gold">DREAMSPACE</p>
+                <p className="text-[0.62rem] font-bold uppercase tracking-[0.22em] text-gold">{company.shortName}</p>
                 <p className="serif-heading mt-1 text-2xl sm:text-4xl">{transition.to.label}</p>
               </div>
               <p className="hidden text-[0.62rem] font-bold uppercase tracking-[0.18em] text-white/45 sm:block">
-                Architecture / Planning / Liaisoning
+                Infrastructure / Planning / Liaisoning / Real Estate
               </p>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
+import { company } from '../data/company';
 
 const navItems = [
   { to: '/', label: 'nav.home' },
@@ -44,8 +45,8 @@ export default function Navbar() {
     >
       <nav className="container-page flex items-center justify-between gap-6" aria-label="Main navigation">
         <Link to="/" className="focus-ring group" onClick={() => setOpen(false)}>
-          <span className="serif-heading block text-2xl font-semibold leading-none tracking-[0.14em]">DREAMSPACE</span>
-          <span className="mt-1 block text-[0.62rem] font-semibold uppercase tracking-[0.19em] text-gold">{t('brand.tagline')}</span>
+          <span className="serif-heading block text-2xl font-semibold leading-none tracking-[0.14em]">{company.shortName}</span>
+          <span className="mt-1 block max-w-[220px] text-[0.55rem] font-semibold uppercase leading-3 tracking-[0.13em] text-gold sm:max-w-none sm:text-[0.62rem] sm:tracking-[0.18em]">{company.name}</span>
         </Link>
 
         <div className="hidden items-center gap-8 lg:flex">
@@ -86,7 +87,8 @@ export default function Navbar() {
             <div className="container-page relative flex h-full flex-col py-6">
               <div className="flex items-center justify-between">
                 <Link to="/" onClick={() => setOpen(false)}>
-                  <span className="serif-heading block text-2xl tracking-[0.14em]">DREAMSPACE</span>
+                  <span className="serif-heading block text-2xl tracking-[0.14em]">{company.shortName}</span>
+                  <span className="mt-1 block max-w-[210px] text-[0.56rem] font-semibold uppercase leading-3 tracking-[0.13em] text-gold">{company.name}</span>
                 </Link>
                 <button type="button" aria-label="Close mobile menu" onClick={() => setOpen(false)} className="focus-ring grid h-11 w-11 place-items-center border border-white/30">
                   <X size={22} />
@@ -99,7 +101,7 @@ export default function Navbar() {
                     to={item.to}
                     end={item.to === '/'}
                     onClick={() => setOpen(false)}
-                    className={({ isActive }) => `serif-heading text-4xl ${isActive ? 'text-gold' : 'text-white'}`}
+                    className={({ isActive }) => `serif-heading text-4xl leading-none ${isActive ? 'text-gold' : 'text-white'}`}
                   >
                     {t(item.label)}
                   </NavLink>

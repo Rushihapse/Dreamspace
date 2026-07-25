@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { company } from '../data/company';
 
 const fallbackImage = 'https://images.unsplash.com/photo-1496307653780-42ee777d4833?auto=format&fit=crop&w=1800&q=85';
 
@@ -49,16 +50,14 @@ export default function PageHeader({ title, subtitle, image = fallbackImage, med
       <div className="absolute inset-x-0 bottom-0 z-10 hidden border-y border-white/10 bg-dark/20 backdrop-blur-sm sm:block">
         <div className="container-page flex items-center justify-between gap-4 py-3">
           <span className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-white/45">
-            Architecture / Construction / Planning / Liaisoning
+            Infrastructure / Planning / Liaisoning / Real Estate
           </span>
           <span className="h-1 w-12 bg-gold" />
         </div>
       </div>
       <div className="container-page relative flex min-h-[48vh] items-end pb-14 sm:min-h-[55vh] sm:pb-20">
         <div className="max-w-4xl">
-          <motion.p className="eyebrow" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
-            DREAMSPACE
-          </motion.p>
+          <motion.p className="eyebrow" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>{company.shortName}</motion.p>
           <motion.h1 className="serif-heading mt-4 text-5xl font-semibold leading-tight sm:text-7xl" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}>
             {title}
           </motion.h1>
