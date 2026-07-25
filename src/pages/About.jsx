@@ -1,22 +1,32 @@
-import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import CTASection from '../components/CTASection';
 import ImageReveal from '../components/ImageReveal';
 import PageHeader from '../components/PageHeader';
 import SectionTitle from '../components/SectionTitle';
+import PropertyLifecycle from '../components/PropertyLifecycle';
+import SeoTags from '../components/SeoTags';
+import { services } from '../data/services';
 import { company } from '../data/company';
 
 const values = ['Professional Excellence', 'Transparency', 'Practical Design', 'Compliance', 'Sustainable Development'];
+const trustFacts = [
+  { value: String(services.length), label: 'Integrated Service Divisions' },
+  { value: String(company.authorities.length), label: 'Approval Authorities Covered' },
+  { value: '01', label: 'Founder-led Studio' },
+  { value: company.region, label: 'Regional Focus' }
+];
 
 export default function About() {
   const { t } = useTranslation();
 
   return (
     <>
-      <Helmet>
-        <title>About | Dreamspace Infrastructure & Liaisoning Pvt Ltd</title>
-        <meta name="description" content={`Learn about ${company.name}, founded by ${company.founder}, and its integrated architecture, planning, liaisoning and property lifecycle approach.`} />
-      </Helmet>
+      <SeoTags
+        title="About | Dreamspace Infrastructure & Liaisoning Pvt Ltd"
+        description={`Learn about ${company.name}, founded by ${company.founder}, and its integrated architecture, planning, liaisoning and property lifecycle approach.`}
+        path="/about"
+      />
       <PageHeader
         title={t('about.title')}
         subtitle={t('about.subtitle')}
@@ -44,6 +54,22 @@ export default function About() {
           </div>
         </div>
       </section>
+      <section className="border-y border-dark/10 bg-white py-10">
+        <div className="container-page grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {trustFacts.map((fact, index) => (
+            <motion.div
+              key={fact.label}
+              initial={false}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.06 }}
+            >
+              <p className="serif-heading text-3xl text-gold sm:text-4xl">{fact.value}</p>
+              <p className="mt-2 text-xs font-semibold uppercase leading-5 tracking-[0.1em] text-muted">{fact.label}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
       <section className="bg-white py-16 sm:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-[0.75fr_1fr] lg:items-end">
           <div>
@@ -52,10 +78,11 @@ export default function About() {
             <p className="mt-2 text-sm font-bold uppercase tracking-[0.16em] text-gold">{company.founderTitle}</p>
           </div>
           <p className="text-lg leading-9 text-muted">
-            {company.founder} leads {company.name} with a practical understanding of architecture, planning processes, liaisoning, property advisory and client-focused coordination. His vision is to simplify complex approval and property journeys while delivering spaces that are functional, refined and future-ready.
+            {company.founder} leads {company.name} with professional expertise spanning architecture, planning processes, liaisoning and property advisory, built through direct, client-focused coordination rather than layered handoffs. The approach favors transparency over shortcuts: clients see the real status of approvals, documentation and site decisions at every stage. That discipline extends to sustainability — designs and land-use recommendations are weighed for long-term durability, not just immediate approval, so the outcome holds value well beyond handover.
           </p>
         </div>
       </section>
+      <PropertyLifecycle kicker="How We Work" title="The same disciplined lifecycle behind every Dreamspace engagement." variant="compact" />
       <section className="py-16 sm:py-24">
         <div className="container-page">
           <SectionTitle eyebrow="Values" title="A company culture built around professional clarity and long-term trust." />

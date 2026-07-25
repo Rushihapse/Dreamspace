@@ -44,12 +44,15 @@ export default function Navbar() {
       }`}
     >
       <nav className="container-page flex items-center justify-between gap-6" aria-label="Main navigation">
-        <Link to="/" className="focus-ring group" onClick={() => setOpen(false)}>
-          <span className="serif-heading block text-2xl font-semibold leading-none tracking-[0.14em]">{company.shortName}</span>
-          <span className="mt-1 block max-w-[220px] text-[0.55rem] font-semibold uppercase leading-3 tracking-[0.13em] text-gold sm:max-w-none sm:text-[0.62rem] sm:tracking-[0.18em]">{company.name}</span>
+        <Link to="/" className="focus-ring group flex shrink-0 items-center gap-3 xl:mr-6" onClick={() => setOpen(false)}>
+          <img src="/logo-icon.png" alt="" className="h-10 w-auto shrink-0 sm:h-12" />
+          <span className="block whitespace-nowrap leading-tight">
+            <span className="serif-heading block text-xl font-semibold tracking-[0.08em] sm:text-2xl">{company.shortName}</span>
+            <span className="block text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-gold sm:text-[0.66rem] sm:tracking-[0.18em]">Infrastructure & Liaisoning</span>
+          </span>
         </Link>
 
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden shrink-0 items-center gap-5 xl:flex">
           {navItems.map((item) => (
             <NavLink key={item.to} to={item.to} className={navLinkClass} end={item.to === '/'}>
               {t(item.label)}
@@ -57,9 +60,14 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="hidden items-center gap-5 lg:flex">
+        <div className="hidden shrink-0 items-center gap-5 xl:flex">
           <LanguageSwitcher />
-          <Link to="/contact" data-cursor="Start" data-cursor-arrow="true" className="focus-ring border border-current px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:bg-gold hover:text-white">
+          <Link
+            to="/contact"
+            data-cursor="Start"
+            data-cursor-arrow="true"
+            className="focus-ring shrink-0 whitespace-nowrap border border-current px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:bg-gold hover:text-white"
+          >
             {t('common.startProject')}
           </Link>
         </div>
@@ -67,8 +75,10 @@ export default function Navbar() {
         <button
           type="button"
           aria-label="Open mobile menu"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
           onClick={() => setOpen(true)}
-          className="focus-ring grid h-11 w-11 place-items-center border border-current/30 lg:hidden"
+          className="focus-ring grid h-11 w-11 shrink-0 place-items-center border border-current/30 xl:hidden"
         >
           <Menu size={22} />
         </button>
@@ -77,7 +87,8 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed left-0 top-0 z-[100] h-dvh w-screen bg-[#111111] text-white lg:hidden"
+            id="mobile-menu"
+            className="fixed left-0 top-0 z-[100] h-dvh w-screen bg-[#111111] text-white xl:hidden"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -85,10 +96,13 @@ export default function Navbar() {
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_16%,rgba(180,138,90,0.16),transparent_28%)]" />
             <div className="container-page relative flex h-full flex-col py-6">
-              <div className="flex items-center justify-between">
-                <Link to="/" onClick={() => setOpen(false)}>
-                  <span className="serif-heading block text-2xl tracking-[0.14em]">{company.shortName}</span>
-                  <span className="mt-1 block max-w-[210px] text-[0.56rem] font-semibold uppercase leading-3 tracking-[0.13em] text-gold">{company.name}</span>
+              <div className="flex items-center justify-between gap-4">
+                <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+                  <img src="/logo-icon.png" alt="" className="h-10 w-auto shrink-0" />
+                  <span className="block leading-tight">
+                    <span className="serif-heading block text-xl font-semibold tracking-[0.08em]">{company.shortName}</span>
+                    <span className="block text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-gold">Infrastructure & Liaisoning</span>
+                  </span>
                 </Link>
                 <button type="button" aria-label="Close mobile menu" onClick={() => setOpen(false)} className="focus-ring grid h-11 w-11 place-items-center border border-white/30">
                   <X size={22} />

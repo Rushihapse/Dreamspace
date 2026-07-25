@@ -1,7 +1,11 @@
+// TODO(i18n): mr/hi title/short text below are English-language stubs pending
+// a fluent Marathi/Hindi reviewer — the app already fails safe to English.
 export const services = [
   {
     "slug": "architecture-design-services",
     "category": "Design",
+    "groupKey": "architecture",
+    "division": "Architecture & Design",
     "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Architecture & Design Services",
@@ -23,6 +27,14 @@ export const services = [
       "3D visualization and presentation support",
       "Working drawings and design coordination"
     ],
+    "scope": [
+      "Requirement & site briefing",
+      "Concept design & massing",
+      "Design development",
+      "Working drawings & specifications",
+      "Coordination through execution"
+    ],
+    "industriesServed": ["Residential", "Commercial", "Institutional", "Hospitality", "Mixed-use developments"],
     "documents": [
       "Site dimensions",
       "Ownership or property records",
@@ -39,6 +51,8 @@ export const services = [
   {
     "slug": "planning-regulatory-approvals",
     "category": "Planning",
+    "groupKey": "planning-approvals",
+    "division": "Planning & Regulatory Approvals",
     "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Planning & Regulatory Approvals",
@@ -60,6 +74,14 @@ export const services = [
       "Authority coordination",
       "Sanction and certificate assistance"
     ],
+    "scope": [
+      "Site & document verification",
+      "Submission drawing preparation",
+      "Application filing",
+      "Authority follow-up",
+      "Sanction & certificate handover"
+    ],
+    "industriesServed": ["Residential developers", "Commercial builders", "Institutional projects", "Individual plot owners"],
     "documents": [
       "7/12 extract or property card",
       "Site plan and measurement records",
@@ -76,6 +98,8 @@ export const services = [
   {
     "slug": "liaisoning-compliance-services",
     "category": "Liaisoning",
+    "groupKey": "planning-approvals",
+    "division": "Liaisoning & Compliance",
     "image": "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Liaisoning & Compliance Services",
@@ -97,6 +121,14 @@ export const services = [
       "Client updates",
       "Compliance advisory"
     ],
+    "scope": [
+      "Requirement & authority mapping",
+      "File and document preparation",
+      "Department coordination",
+      "Status tracking",
+      "Compliance closure"
+    ],
+    "industriesServed": ["Real estate developers", "Industrial units", "Institutional bodies", "Individual clients"],
     "documents": [
       "Project documents",
       "Identity and ownership records",
@@ -113,6 +145,8 @@ export const services = [
   {
     "slug": "real-estate-property-consultancy",
     "category": "Real Estate",
+    "groupKey": "real-estate",
+    "division": "Property Purchase & Sale",
     "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Property Purchase, Sale & Real Estate Consultancy",
@@ -134,6 +168,14 @@ export const services = [
       "Due diligence direction",
       "Transaction process assistance"
     ],
+    "scope": [
+      "Client requirement discussion",
+      "Property shortlisting or evaluation",
+      "Due diligence guidance",
+      "Negotiation support",
+      "Transaction and transfer coordination"
+    ],
+    "industriesServed": ["Residential buyers & sellers", "Commercial property owners", "Investors", "NRIs"],
     "documents": [
       "Property title documents",
       "7/12 or property card",
@@ -150,6 +192,8 @@ export const services = [
   {
     "slug": "rental-leasing-tenant-management",
     "category": "Property",
+    "groupKey": "real-estate",
+    "division": "Rental & Leasing",
     "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Rental, Leasing & Tenant Management",
@@ -171,6 +215,14 @@ export const services = [
       "Occupancy management",
       "Owner-tenant coordination"
     ],
+    "scope": [
+      "Property assessment",
+      "Tenant sourcing or search",
+      "Terms negotiation",
+      "Lease documentation",
+      "Handover and occupancy support"
+    ],
+    "industriesServed": ["Residential owners", "Commercial landlords", "Industrial property owners", "Corporate tenants"],
     "documents": [
       "Property details",
       "Owner identity records",
@@ -187,6 +239,8 @@ export const services = [
   {
     "slug": "property-management",
     "category": "Property",
+    "groupKey": "real-estate",
+    "division": "Property Management",
     "image": "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Property Management",
@@ -208,6 +262,14 @@ export const services = [
       "Property inspections",
       "Facility coordination"
     ],
+    "scope": [
+      "Property audit & onboarding",
+      "Maintenance scheduling",
+      "Rent & lease administration",
+      "Periodic inspections",
+      "Owner reporting"
+    ],
+    "industriesServed": ["Residential societies", "Commercial buildings", "Individual property owners", "NRIs"],
     "documents": [
       "Property details",
       "Lease records",
@@ -224,6 +286,8 @@ export const services = [
   {
     "slug": "property-investment-advisory",
     "category": "Investment",
+    "groupKey": "real-estate",
+    "division": "Investment Advisory",
     "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Property Investment & Investment Advisory",
@@ -245,6 +309,14 @@ export const services = [
       "Portfolio direction",
       "Strategic advisory"
     ],
+    "scope": [
+      "Investment goal discussion",
+      "Opportunity screening",
+      "Feasibility & risk review",
+      "Documentation guidance",
+      "Portfolio monitoring"
+    ],
+    "industriesServed": ["Individual investors", "Family offices", "Developers", "Corporates"],
     "documents": [
       "Property documents",
       "Investment brief",
@@ -261,6 +333,8 @@ export const services = [
   {
     "slug": "land-development-infrastructure-planning",
     "category": "Planning",
+    "groupKey": "planning-approvals",
+    "division": "Land Development",
     "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Land Development & Infrastructure Planning",
@@ -282,6 +356,14 @@ export const services = [
       "NA conversion support",
       "Zone change consultancy"
     ],
+    "scope": [
+      "Land & title study",
+      "Layout or township concept",
+      "Conversion / zone-change guidance",
+      "Infrastructure planning",
+      "Approval-ready documentation"
+    ],
+    "industriesServed": ["Land owners", "Developers", "Township promoters", "Industrial land holders"],
     "documents": [
       "7/12 extract",
       "Mutation entries",
@@ -299,6 +381,8 @@ export const services = [
   {
     "slug": "project-consultancy-management",
     "category": "Consultation",
+    "groupKey": "consultancy",
+    "division": "Project Consultancy",
     "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Project Consultancy & Project Management",
@@ -320,6 +404,14 @@ export const services = [
       "Quality management",
       "Construction supervision"
     ],
+    "scope": [
+      "Feasibility study",
+      "Cost & budget planning",
+      "Execution strategy",
+      "Quality & schedule monitoring",
+      "Handover support"
+    ],
+    "industriesServed": ["Real estate developers", "Institutional projects", "Industrial clients", "Individual builders"],
     "documents": [
       "Project brief",
       "Site information",
@@ -337,6 +429,8 @@ export const services = [
   {
     "slug": "interior-design-space-planning",
     "category": "Design",
+    "groupKey": "architecture",
+    "division": "Interior Design",
     "image": "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Interior Design & Space Planning",
@@ -358,6 +452,14 @@ export const services = [
       "Residential and commercial interiors",
       "Hospitality, healthcare and education interiors"
     ],
+    "scope": [
+      "Requirement & site study",
+      "Space planning concept",
+      "Material & lighting selection",
+      "Design documentation",
+      "Execution coordination"
+    ],
+    "industriesServed": ["Residential", "Corporate offices", "Hospitality", "Healthcare", "Education"],
     "documents": [
       "Floor plan",
       "Room requirements",
@@ -374,6 +476,8 @@ export const services = [
   {
     "slug": "construction-support-services",
     "category": "Construction",
+    "groupKey": "infrastructure",
+    "division": "Construction Support",
     "image": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Construction Support Services",
@@ -395,6 +499,14 @@ export const services = [
       "Execution documentation",
       "Construction consultancy"
     ],
+    "scope": [
+      "Contractor evaluation support",
+      "Site mobilization coordination",
+      "Quality & progress supervision",
+      "Technical inspections",
+      "Execution documentation"
+    ],
+    "industriesServed": ["Residential builders", "Commercial developers", "Industrial projects", "Institutional clients"],
     "documents": [
       "Approved drawings",
       "Contractor details",
@@ -411,6 +523,8 @@ export const services = [
   {
     "slug": "digital-design-technology-services",
     "category": "Digital",
+    "groupKey": "architecture",
+    "division": "Digital Design",
     "image": "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Digital Design & Technology Services",
@@ -432,6 +546,14 @@ export const services = [
       "Animation and presentations",
       "Project documentation"
     ],
+    "scope": [
+      "Base data & drawing collection",
+      "CAD drafting",
+      "BIM / 3D modeling",
+      "Visualization & walkthroughs",
+      "Digital documentation handover"
+    ],
+    "industriesServed": ["Architecture firms", "Real estate developers", "Interior studios", "Construction teams"],
     "documents": [
       "Base drawings",
       "Design brief",
@@ -448,6 +570,8 @@ export const services = [
   {
     "slug": "consultancy-advisory-services",
     "category": "Consultation",
+    "groupKey": "consultancy",
+    "division": "Consultancy",
     "image": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Consultancy & Advisory Services",
@@ -469,6 +593,14 @@ export const services = [
       "Development advisory",
       "Business support"
     ],
+    "scope": [
+      "Discovery consultation",
+      "Technical & regulatory review",
+      "Strategic recommendation",
+      "Implementation roadmap",
+      "Ongoing advisory support"
+    ],
+    "industriesServed": ["Developers", "Corporates", "Institutions", "Individual clients"],
     "documents": [
       "Project questions",
       "Available property records",
@@ -485,6 +617,8 @@ export const services = [
   {
     "slug": "future-development-expansion",
     "category": "Infrastructure",
+    "groupKey": "infrastructure",
+    "division": "Future Expansion",
     "image": "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=85",
     "title": {
       "en": "Future Development & Expansion Advisory",
@@ -506,6 +640,14 @@ export const services = [
       "Hospitality and education project direction",
       "Future expansion planning"
     ],
+    "scope": [
+      "Opportunity assessment",
+      "Sustainability & feasibility review",
+      "Concept direction",
+      "Stakeholder alignment",
+      "Long-term roadmap"
+    ],
+    "industriesServed": ["Redevelopment societies", "Smart city stakeholders", "Industrial & corporate clients", "Hospitality and education sponsors"],
     "documents": [
       "Opportunity brief",
       "Land or property records",
@@ -519,6 +661,14 @@ export const services = [
       "Strategic expansion support"
     ]
   }
+];
+
+export const serviceGroups = [
+  { key: 'architecture', label: 'Architecture' },
+  { key: 'planning-approvals', label: 'Planning & Approvals' },
+  { key: 'real-estate', label: 'Real Estate' },
+  { key: 'infrastructure', label: 'Infrastructure' },
+  { key: 'consultancy', label: 'Consultancy' }
 ];
 
 export const serviceFaqs = [

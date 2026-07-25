@@ -1,12 +1,10 @@
-import { Helmet } from 'react-helmet-async';
 import { Navigate, Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
 import CTASection from '../components/CTASection';
+import SeoTags from '../components/SeoTags';
 import { serviceFaqs, services } from '../data/services';
-
-const process = ['Requirement mapping', 'Site and document review', 'Planning direction', 'Drawing or file preparation', 'Coordination and guidance'];
 
 export default function ServiceDetail() {
   const { slug } = useParams();
@@ -18,10 +16,7 @@ export default function ServiceDetail() {
 
   return (
     <>
-      <Helmet>
-        <title>{service.title.en} | DREAMSPACE Services</title>
-        <meta name="description" content={service.short.en} />
-      </Helmet>
+      <SeoTags title={`${service.title.en} | DREAMSPACE Services`} description={service.short.en} path={`/services/${service.slug}`} image={service.image} />
       <PageHeader title={service.title[language] || service.title.en} subtitle={service.subtitle} image={service.image} />
       <section className="py-16 sm:py-24">
         <div className="container-page grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
@@ -41,7 +36,8 @@ export default function ServiceDetail() {
               <p className="mt-4 text-xl leading-10 text-muted">{service.description}</p>
             </div>
             <DetailList title="What we provide" items={service.what} />
-            <DetailList title="Our process" items={process} numbered />
+            <DetailList title="Our process" items={service.scope} numbered />
+            {service.industriesServed?.length > 0 && <DetailList title="Industries We Serve" items={service.industriesServed} />}
             {service.documents?.length > 0 && <DetailList title="Required documents" items={service.documents} />}
             <DetailList title="Benefits" items={service.benefits} />
             <div>

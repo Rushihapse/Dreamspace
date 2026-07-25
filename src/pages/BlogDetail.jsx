@@ -1,8 +1,8 @@
-import { Helmet } from 'react-helmet-async';
 import { Navigate, Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import CTASection from '../components/CTASection';
+import SeoTags from '../components/SeoTags';
 import { blogs } from '../data/blogs';
 
 export default function BlogDetail() {
@@ -15,10 +15,7 @@ export default function BlogDetail() {
 
   return (
     <>
-      <Helmet>
-        <title>{blog.title} | DREAMSPACE Journal</title>
-        <meta name="description" content={blog.excerpt} />
-      </Helmet>
+      <SeoTags title={`${blog.title} | DREAMSPACE Journal`} description={blog.excerpt} path={`/blogs/${blog.slug}`} image={blog.image} />
       <PageHeader title={blog.title} subtitle={`${formatDate(blog.date)} / Dreamspace Team / ${blog.readingTime}`} image={blog.image} />
       <article className="py-16 sm:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-[0.35fr_0.65fr]">

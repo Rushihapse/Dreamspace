@@ -1,8 +1,8 @@
-import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
+import SeoTags from '../components/SeoTags';
 import { company } from '../data/company';
 import { services } from '../data/services';
 
@@ -53,10 +53,11 @@ export default function Contact() {
 
   return (
     <>
-      <Helmet>
-        <title>Contact | Dreamspace Infrastructure & Liaisoning Pvt Ltd</title>
-        <meta name="description" content="Contact Dreamspace Infrastructure & Liaisoning Pvt Ltd for architecture, approvals, liaisoning, real estate consultancy and property lifecycle support in Maharashtra, India." />
-      </Helmet>
+      <SeoTags
+        title="Contact | Dreamspace Infrastructure & Liaisoning Pvt Ltd"
+        description="Contact Dreamspace Infrastructure & Liaisoning Pvt Ltd for architecture, approvals, liaisoning, real estate consultancy and property lifecycle support in Maharashtra, India."
+        path="/contact"
+      />
       <PageHeader title={t('contact.title')} subtitle={t('contact.subtitle')} image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85" />
       <section className="py-16 sm:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">

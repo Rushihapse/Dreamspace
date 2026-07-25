@@ -1,17 +1,14 @@
-import { Helmet } from 'react-helmet-async';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SeoTags from '../components/SeoTags';
 
 export default function NotFound() {
   const { t } = useTranslation();
 
   return (
     <section className="grid min-h-screen place-items-center bg-dark px-6 py-24 text-center text-white">
-      <Helmet>
-        <title>Page Not Found | DREAMSPACE</title>
-        <meta name="description" content="The requested Dreamspace page could not be found." />
-      </Helmet>
+      <SeoTags title="Page Not Found | DREAMSPACE" description="The requested Dreamspace page could not be found." path="/404" />
       <div className="max-w-2xl">
         <p className="eyebrow">404</p>
         <h1 className="serif-heading mt-4 text-5xl font-semibold sm:text-7xl">{t('notFound.title')}</h1>

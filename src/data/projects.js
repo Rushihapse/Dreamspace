@@ -7,6 +7,9 @@ export const projects = [
     year: '2026',
     area: '3,200 sq.ft.',
     serviceType: 'Architecture + Planning',
+    status: 'Completed',
+    client: 'Private Client',
+    servicesDelivered: ['Architecture & Design', 'Planning & Regulatory Approvals'],
     image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1500&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80',
@@ -27,6 +30,9 @@ export const projects = [
     year: '2026',
     area: '8,500 sq.ft.',
     serviceType: 'Commercial Planning',
+    status: 'Completed',
+    client: 'Private Client',
+    servicesDelivered: ['Architecture & Design', 'Interior Design', 'Project Consultancy'],
     image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1500&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80',
@@ -47,6 +53,9 @@ export const projects = [
     year: '2026',
     area: '18 units',
     serviceType: 'Residential Planning',
+    status: 'Ongoing',
+    client: 'Private Client',
+    servicesDelivered: ['Architecture & Design', 'Planning & Regulatory Approvals', 'Land Development'],
     image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&fit=crop&w=1500&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1600047509358-9dc75507daeb?auto=format&fit=crop&w=1200&q=80',
@@ -67,6 +76,9 @@ export const projects = [
     year: '2026',
     area: '4 acres',
     serviceType: 'Layout Planning',
+    status: 'Completed',
+    client: 'Private Client',
+    servicesDelivered: ['Land Development & Infrastructure Planning', 'Planning & Regulatory Approvals'],
     image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1500&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1200&q=80',
@@ -87,6 +99,9 @@ export const projects = [
     year: '2026',
     area: '2,600 sq.ft.',
     serviceType: 'Architecture',
+    status: 'Completed',
+    client: 'Private Client',
+    servicesDelivered: ['Architecture & Design'],
     image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1500&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80',
@@ -107,6 +122,9 @@ export const projects = [
     year: '2026',
     area: '1,450 sq.ft.',
     serviceType: 'Interior Planning',
+    status: 'Completed',
+    client: 'Private Client',
+    servicesDelivered: ['Interior Design & Space Planning'],
     image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1500&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1600210491369-e753d80a41f3?auto=format&fit=crop&w=1200&q=80',
@@ -127,6 +145,9 @@ export const projects = [
     year: '2026',
     area: '2.5 acres',
     serviceType: 'Liaisoning + Planning',
+    status: 'Ongoing',
+    client: 'Private Client',
+    servicesDelivered: ['Liaisoning & Compliance Services', 'Land Development & Infrastructure Planning'],
     image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1500&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80',
@@ -147,6 +168,9 @@ export const projects = [
     year: '2026',
     area: '42,000 sq.ft.',
     serviceType: 'Master Planning',
+    status: 'Ongoing',
+    client: 'Private Client',
+    servicesDelivered: ['Project Consultancy & Project Management', 'Land Development & Infrastructure Planning'],
     image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1500&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',

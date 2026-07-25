@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -10,22 +9,18 @@ export default function ProjectCard({ project, large = false }) {
       data-cursor-arrow="true"
       className={`group block overflow-hidden bg-dark text-white ${large ? 'lg:row-span-2' : ''}`}
     >
-      <motion.div
-        className={`image-overlay relative overflow-hidden ${large ? 'aspect-[4/5] lg:h-full' : 'aspect-[4/3]'}`}
-        initial={{ clipPath: 'inset(0 0 100% 0)' }}
-        whileInView={{ clipPath: 'inset(0 0 0% 0)' }}
-        viewport={{ once: true, margin: '-70px' }}
-        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-      >
-        <motion.img
+      <div className={`image-overlay relative overflow-hidden ${large ? 'aspect-[4/5] lg:h-full' : 'aspect-[4/3]'}`}>
+        <img
           src={project.image}
           alt={project.title}
+          decoding="async"
           className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
-          initial={{ scale: 1.08 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true, margin: '-70px' }}
-          transition={{ duration: 1.05, ease: 'easeOut' }}
         />
+        {project.status && (
+          <span className="absolute right-4 top-4 z-10 border border-white/25 bg-dark/70 px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
+            {project.status}
+          </span>
+        )}
         <div className="absolute inset-x-0 bottom-0 z-10 p-6">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold">{project.category} / {project.year}</p>
           <h3 className="serif-heading mt-3 text-3xl font-semibold">{project.title}</h3>
@@ -33,7 +28,7 @@ export default function ProjectCard({ project, large = false }) {
             Open Project <ArrowUpRight size={16} />
           </div>
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 }

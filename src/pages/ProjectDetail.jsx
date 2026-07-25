@@ -1,9 +1,9 @@
-import { Helmet } from 'react-helmet-async';
 import { Navigate, Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import CTASection from '../components/CTASection';
 import ImageReveal from '../components/ImageReveal';
+import SeoTags from '../components/SeoTags';
 import { projects } from '../data/projects';
 
 export default function ProjectDetail() {
@@ -17,10 +17,7 @@ export default function ProjectDetail() {
 
   return (
     <>
-      <Helmet>
-        <title>{project.title} | DREAMSPACE Projects</title>
-        <meta name="description" content={project.overview} />
-      </Helmet>
+      <SeoTags title={`${project.title} | DREAMSPACE Projects`} description={project.overview} path={`/projects/${project.slug}`} image={project.image} />
       <PageHeader title={project.title} subtitle={`${project.category} / ${project.location}`} image={project.image} />
       <section className="py-16 sm:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
@@ -30,18 +27,34 @@ export default function ProjectDetail() {
             </Link>
             <dl className="mt-8 grid gap-5 text-sm">
               {[
+                ['Status', project.status],
                 ['Category', project.category],
                 ['Location', project.location],
                 ['Year', project.year],
                 ['Area', project.area],
+                ['Client', project.client],
                 ['Service Type', project.serviceType]
-              ].map(([label, value]) => (
-                <div key={label} className="border-b border-dark/10 pb-4">
-                  <dt className="text-xs font-bold uppercase tracking-[0.16em] text-muted">{label}</dt>
-                  <dd className="mt-1 font-semibold">{value}</dd>
-                </div>
-              ))}
+              ]
+                .filter(([, value]) => value)
+                .map(([label, value]) => (
+                  <div key={label} className="border-b border-dark/10 pb-4">
+                    <dt className="text-xs font-bold uppercase tracking-[0.16em] text-muted">{label}</dt>
+                    <dd className="mt-1 font-semibold">{value}</dd>
+                  </div>
+                ))}
             </dl>
+            {project.servicesDelivered?.length > 0 && (
+              <div className="mt-2 border-t border-dark/10 pt-6">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Services Delivered</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {project.servicesDelivered.map((item) => (
+                    <span key={item} className="border border-dark/12 px-3 py-1.5 text-xs font-semibold">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </aside>
           <article className="grid gap-12">
             <ProjectSection title="Overview" text={project.overview} />

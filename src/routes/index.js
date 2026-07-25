@@ -1,14 +1,15 @@
-import { createElement } from 'react';
-import About from '../pages/About';
-import BlogDetail from '../pages/BlogDetail';
-import Blogs from '../pages/Blogs';
-import Contact from '../pages/Contact';
+import { createElement, lazy } from 'react';
 import Home from '../pages/Home';
-import NotFound from '../pages/NotFound';
-import ProjectDetail from '../pages/ProjectDetail';
-import Projects from '../pages/Projects';
-import ServiceDetail from '../pages/ServiceDetail';
-import Services from '../pages/Services';
+
+const About = lazy(() => import('../pages/About'));
+const Services = lazy(() => import('../pages/Services'));
+const ServiceDetail = lazy(() => import('../pages/ServiceDetail'));
+const Projects = lazy(() => import('../pages/Projects'));
+const ProjectDetail = lazy(() => import('../pages/ProjectDetail'));
+const Blogs = lazy(() => import('../pages/Blogs'));
+const BlogDetail = lazy(() => import('../pages/BlogDetail'));
+const Contact = lazy(() => import('../pages/Contact'));
+const NotFound = lazy(() => import('../pages/NotFound'));
 
 export const routes = [
   { path: '/', element: createElement(Home) },

@@ -538,6 +538,25 @@ select {
   outline-offset: 4px;
 }
 
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 12px;
+  z-index: 200;
+  background: var(--dark);
+  color: var(--white);
+  padding: 12px 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: top 200ms ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
 @media (max-width: 420px) {
   .container-page {
     width: min(100% - 24px, 1180px);

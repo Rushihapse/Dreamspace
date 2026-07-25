@@ -19,6 +19,7 @@ export default function LanguageSwitcher({ compact = false }) {
             key={language.code}
             type="button"
             onClick={() => i18n.changeLanguage(language.code)}
+            aria-pressed={i18n.language === language.code}
             className={`focus-ring rounded-full px-2.5 py-1 text-[0.68rem] font-bold transition ${
               i18n.language === language.code ? 'bg-dark text-white' : 'text-current hover:bg-dark/10'
             }`}

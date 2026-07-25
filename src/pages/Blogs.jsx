@@ -1,8 +1,8 @@
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
 import BlogCard from '../components/BlogCard';
 import CTASection from '../components/CTASection';
+import SeoTags from '../components/SeoTags';
 import { blogs } from '../data/blogs';
 
 export default function Blogs() {
@@ -10,10 +10,11 @@ export default function Blogs() {
 
   return (
     <>
-      <Helmet>
-        <title>Journal | DREAMSPACE</title>
-        <meta name="description" content="Dreamspace journal with architecture, permissions, planning and liaisoning insights." />
-      </Helmet>
+      <SeoTags
+        title="Journal | DREAMSPACE"
+        description="Dreamspace journal with architecture, permissions, planning and liaisoning insights."
+        path="/blogs"
+      />
       <PageHeader title={t('blogs.title')} subtitle={t('blogs.subtitle')} image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1800&q=85" />
       <section className="py-16 sm:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-[0.45fr_1fr]">
