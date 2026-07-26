@@ -8,6 +8,7 @@ export const company = {
   whatsapp: '918767281874',
   email: 'dreamspaceliaisoning@gmail.com',
   address: 'Shop No-10, Ground Floor, Shreeji Terrace Apartment, Purnanagar, Chikhali, Pradhikaran, Pune',
+  registeredOffice: 'H.S. No. 27, Matoshri Niwas, Mahadev Nagar, Kusgaon, Bhor, Pune- 412205, Maharashtra',
   region: 'Pune, Maharashtra',
   authorities: ['PMRDA', 'PCMC', 'PMC', 'MIDC', 'MSRDC'],
   cardServices: [

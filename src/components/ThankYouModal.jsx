@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function ThankYouModal({ open, onClose, title, message }) {
   const closeRef = useRef(null);
@@ -22,7 +23,7 @@ export default function ThankYouModal({ open, onClose, title, message }) {
     };
   }, [open, onClose]);
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -79,6 +80,7 @@ export default function ThankYouModal({ open, onClose, title, message }) {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

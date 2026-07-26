@@ -46,9 +46,14 @@ export default function Footer() {
           </Link>
         </div>
       </div>
-      <div className="container-page mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs uppercase tracking-[0.14em] text-white/45 sm:flex-row sm:items-center sm:justify-between">
-        <p>&copy; 2026 {company.name}</p>
-        <p>{company.tagline}</p>
+      <div className="container-page mt-12 border-t border-white/10 pt-6">
+        <p className="text-xs normal-case tracking-[0.02em] text-white/40">
+          <span className="font-bold uppercase tracking-[0.14em] text-white/55">Registered Office:</span> {company.registeredOffice}
+        </p>
+        <div className="mt-3 flex flex-col gap-3 text-xs uppercase tracking-[0.14em] text-white/45 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; 2026 {company.name}</p>
+          <p>{company.tagline}</p>
+        </div>
       </div>
     </footer>
   );
