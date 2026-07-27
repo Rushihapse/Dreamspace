@@ -1,30 +1,72 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, CheckCircle2, Compass, Layers3, Route, Ruler, ShieldCheck, Trees, TriangleAlert } from 'lucide-react';
 
 const projectTypes = {
-  residential: { label: 'Residential', baseFsi: 1.4, setback: 3, green: 24, floors: 3, accent: '#b48a5a' },
-  commercial: { label: 'Commercial', baseFsi: 1.8, setback: 4, green: 18, floors: 5, accent: '#d6b07c' },
-  conversion: { label: 'Conversion', baseFsi: 1.2, setback: 5, green: 30, floors: 2, accent: '#a7b18b' }
+  residential: { label: 'Residential', floors: 3, accent: '#b48a5a' },
+  commercial: { label: 'Commercial', floors: 5, accent: '#d6b07c' },
+  conversion: { label: 'Conversion', floors: 2, accent: '#a7b18b' }
+};
+
+const jurisdictions = {
+  pmrda: {
+    label: 'PMRDA',
+    fullLabel: 'Pune Metropolitan Region Development Authority',
+    baseFsi: 1.0,
+    roadBonus: { wide: 0.35, mid: 0.18, narrow: 0 },
+    usesPremiumFsi: false,
+    note: 'Regional/peripheral jurisdiction under DCPR-2018 and UDCPR-2020. Redevelopment on 12m+ roads can unlock additional height under current rules.'
+  },
+  pcmc_pmc: {
+    label: 'PCMC / PMC',
+    fullLabel: 'Pimpri-Chinchwad & Pune Municipal Corporation',
+    baseFsi: 1.1,
+    roadBonus: { wide: 0.5, mid: 0.28, narrow: 0.05 },
+    usesPremiumFsi: false,
+    note: 'Urban core under UDCPR-2020. Higher base FSI, with premium FSI/TDR loading typically available up to roughly 3.0-4.0 depending on plot size and road width.'
+  },
+  midc: {
+    label: 'MIDC',
+    fullLabel: 'Maharashtra Industrial Development Corporation',
+    baseFsi: 1.0,
+    roadBonus: { wide: 0, mid: 0, narrow: 0 },
+    usesPremiumFsi: true,
+    premiumFsiAmount: 0.5,
+    note: 'Industrial plots carry a flat base FSI of 1.0. Up to 0.5 additional FSI is purchasable as premium FSI, and a minimum of 40% FSI utilization applies.'
+  }
 };
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
 export default function WaveSurface() {
   const [type, setType] = useState('residential');
+  const [jurisdiction, setJurisdiction] = useState('pcmc_pmc');
+  const [premiumFsi, setPremiumFsi] = useState(false);
   const [plot, setPlot] = useState(560);
   const [road, setRoad] = useState(9);
-  const [setback, setSetback] = useState(projectTypes.residential.setback);
+  const [setback, setSetback] = useState(3);
   const [floors, setFloors] = useState(projectTypes.residential.floors);
-  const [green, setGreen] = useState(projectTypes.residential.green);
+  const [green, setGreen] = useState(24);
   const [orientation, setOrientation] = useState(34);
 
   const activeType = projectTypes[type];
+  const activeJurisdiction = jurisdictions[jurisdiction];
+
+  useEffect(() => {
+    if (!activeJurisdiction.usesPremiumFsi) setPremiumFsi(false);
+  }, [activeJurisdiction.usesPremiumFsi]);
 
   const metrics = useMemo(() => {
-    const roadBonus = road >= 12 ? 0.28 : road >= 9 ? 0.16 : 0;
-    const fsi = +(activeType.baseFsi + roadBonus).toFixed(2);
+    const roadBonus = activeJurisdiction.usesPremiumFsi
+      ? 0
+      : road >= 12
+        ? activeJurisdiction.roadBonus.wide
+        : road >= 9
+          ? activeJurisdiction.roadBonus.mid
+          : activeJurisdiction.roadBonus.narrow;
+    const premiumBonus = activeJurisdiction.usesPremiumFsi && premiumFsi ? activeJurisdiction.premiumFsiAmount : 0;
+    const fsi = +(activeJurisdiction.baseFsi + roadBonus + premiumBonus).toFixed(2);
     const setbackLoss = clamp(setback * 5.5, 8, 36);
     const footprintRatio = clamp(72 - setbackLoss - green * 0.42, 22, 64);
     const footprint = Math.round(plot * (footprintRatio / 100));
@@ -32,6 +74,7 @@ export default function WaveSurface() {
     const daylight = clamp(Math.round(96 - floors * 7 + green * 0.72 + setback * 2.2), 42, 96);
     const approval = clamp(Math.round(road * 4 + setback * 6 + green * 0.9 + daylight * 0.22), 38, 98);
     const balance = clamp(Math.round(approval * 0.48 + daylight * 0.28 + (100 - Math.abs(42 - footprintRatio)) * 0.24), 35, 98);
+    const utilisation = Math.round((builtUp / Math.max(plot * fsi, 1)) * 100);
 
     return {
       fsi,
@@ -41,14 +84,20 @@ export default function WaveSurface() {
       daylight,
       approval,
       balance,
+      utilisation,
       greenArea: Math.round(plot * (green / 100))
     };
-  }, [activeType.baseFsi, floors, green, plot, road, setback]);
+  }, [activeJurisdiction, floors, green, plot, premiumFsi, road, setback]);
 
   const report = useMemo(() => {
     const suggestions = [];
 
-    if (road < 9) suggestions.push('Increase road width or review access constraints before committing the massing.');
+    if (activeJurisdiction.usesPremiumFsi) {
+      if (!premiumFsi) suggestions.push('Premium FSI is available on this plot for a purchase cost - toggle it on to see the uplifted built-up potential.');
+      if (metrics.utilisation < 40) suggestions.push('MIDC plots require a minimum of 40% FSI utilisation - the current massing is below that threshold.');
+    } else {
+      if (road < 9) suggestions.push('Increase road width or review access constraints before committing the massing.');
+    }
     if (setback < 3.5 && floors > 3) suggestions.push('Add more setback for taller built form to improve approval comfort.');
     if (green < 22) suggestions.push('Raise open space to soften heat, improve frontage and create a better client experience.');
     if (metrics.daylight < 70) suggestions.push('Reduce floor count or rotate the block to improve light and ventilation.');
@@ -65,14 +114,11 @@ export default function WaveSurface() {
           : 'This option is visually buildable, but the planning logic is weak and should be corrected early.';
 
     return { grade, status, brief, suggestions };
-  }, [floors, green, metrics.balance, metrics.daylight, metrics.footprintRatio, road, setback]);
+  }, [activeJurisdiction.usesPremiumFsi, floors, green, metrics.balance, metrics.daylight, metrics.footprintRatio, metrics.utilisation, premiumFsi, road, setback]);
 
   const applyType = (nextType) => {
-    const preset = projectTypes[nextType];
     setType(nextType);
-    setSetback(preset.setback);
-    setFloors(preset.floors);
-    setGreen(preset.green);
+    setFloors(projectTypes[nextType].floors);
   };
 
   const buildingWidth = clamp(metrics.footprintRatio + floors * 1.6, 28, 66);
@@ -95,6 +141,7 @@ export default function WaveSurface() {
               <button
                 key={key}
                 type="button"
+                aria-pressed={type === key}
                 className={`focus-ring border px-3 py-2 text-[0.66rem] font-bold uppercase tracking-[0.12em] transition ${
                   type === key ? 'border-gold bg-gold text-white' : 'border-white/14 text-white/58 hover:border-white/40 hover:text-white'
                 }`}
@@ -105,6 +152,25 @@ export default function WaveSurface() {
             ))}
           </div>
         </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white/40">Jurisdiction</span>
+          <div className="flex flex-wrap gap-2">
+            {Object.entries(jurisdictions).map(([key, item]) => (
+              <button
+                key={key}
+                type="button"
+                aria-pressed={jurisdiction === key}
+                className={`focus-ring border px-3 py-2 text-[0.66rem] font-bold uppercase tracking-[0.12em] transition ${
+                  jurisdiction === key ? 'border-gold bg-gold/15 text-gold' : 'border-white/14 text-white/58 hover:border-white/40 hover:text-white'
+                }`}
+                onClick={() => setJurisdiction(key)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <p className="mt-3 max-w-3xl text-xs leading-6 text-white/45">{activeJurisdiction.note}</p>
       </div>
 
       <div className="relative grid gap-4 p-4 sm:p-5 xl:grid-cols-[0.95fr_1fr_0.82fr]">
@@ -149,12 +215,37 @@ export default function WaveSurface() {
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             <Control icon={Ruler} label="Plot" value={plot} suffix="sqm" min={220} max={1200} step={20} onChange={setPlot} />
-            <Control icon={Route} label="Road" value={road} suffix="m" min={6} max={18} step={1} onChange={setRoad} />
+            <Control
+              icon={Route}
+              label="Road"
+              value={road}
+              suffix="m"
+              min={6}
+              max={18}
+              step={1}
+              onChange={setRoad}
+              disabled={activeJurisdiction.usesPremiumFsi}
+              helper={activeJurisdiction.usesPremiumFsi ? 'MIDC FSI is flat, not road-width linked' : undefined}
+            />
             <Control icon={ShieldCheck} label="Setback" value={setback} suffix="m" min={2} max={8} step={0.5} onChange={setSetback} />
             <Control icon={Layers3} label="Floors" value={floors} suffix="" min={1} max={8} step={1} onChange={setFloors} />
             <Control icon={Trees} label="Open Space" value={green} suffix="%" min={10} max={42} step={1} onChange={setGreen} />
             <Control icon={Compass} label="Angle" value={orientation} suffix="deg" min={0} max={180} step={3} onChange={setOrientation} />
           </div>
+          {activeJurisdiction.usesPremiumFsi && (
+            <label className="feasibility-control mt-3 flex cursor-pointer items-center justify-between gap-3">
+              <span className="flex items-center gap-2 text-[0.62rem] font-bold uppercase tracking-[0.14em] text-white/52">
+                Include premium FSI (+{activeJurisdiction.premiumFsiAmount}, purchasable)
+              </span>
+              <input
+                type="checkbox"
+                checked={premiumFsi}
+                onChange={(event) => setPremiumFsi(event.target.checked)}
+                className="h-5 w-5 accent-gold"
+                aria-label="Include premium FSI"
+              />
+            </label>
+          )}
         </section>
 
         <section className="border border-white/10 bg-white/[0.045] p-4">
@@ -163,7 +254,7 @@ export default function WaveSurface() {
               <p className="text-[0.64rem] font-bold uppercase tracking-[0.16em] text-white/42">Design Report</p>
               <h4 className="serif-heading mt-1 text-3xl text-white">{report.status}</h4>
             </div>
-            <div className="grid h-16 w-16 place-items-center border border-gold text-center">
+            <div className="grid h-16 w-16 shrink-0 place-items-center border border-gold text-center">
               <span className="serif-heading text-3xl text-gold">{report.grade}</span>
             </div>
           </div>
@@ -198,15 +289,19 @@ export default function WaveSurface() {
           </Link>
         </section>
       </div>
+
+      <p className="relative border-t border-white/10 px-4 py-3 text-[0.66rem] leading-5 text-white/35 sm:px-5">
+        Indicative planning reference based on Maharashtra&apos;s UDCPR/DCPR framework for {activeJurisdiction.fullLabel} - not an official FSI or sanction calculation. Always confirm current norms with the relevant authority and a licensed architect before finalising design.
+      </p>
     </div>
   );
 }
 
 function Metric({ label, value, suffix }) {
   return (
-    <div className="border border-white/10 bg-white/[0.04] p-3">
-      <p className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white/42">{label}</p>
-      <p className="serif-heading mt-1 text-xl text-white">
+    <div className="min-w-0 border border-white/10 bg-white/[0.04] p-3">
+      <p className="truncate text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white/42">{label}</p>
+      <p className="serif-heading mt-1 truncate text-xl text-white">
         {value}
         {suffix && <span className="ml-1 text-xs text-white/42">{suffix}</span>}
       </p>
@@ -214,9 +309,9 @@ function Metric({ label, value, suffix }) {
   );
 }
 
-function Control({ icon: Icon, label, value, suffix, min, max, step, onChange }) {
+function Control({ icon: Icon, label, value, suffix, min, max, step, onChange, disabled = false, helper }) {
   return (
-    <label className="feasibility-control">
+    <label className={`feasibility-control ${disabled ? 'opacity-45' : ''}`}>
       <span className="flex items-center justify-between gap-2">
         <span className="flex items-center gap-2 text-[0.62rem] font-bold uppercase tracking-[0.14em] text-white/52">
           <Icon size={14} />
@@ -233,9 +328,11 @@ function Control({ icon: Icon, label, value, suffix, min, max, step, onChange })
         max={max}
         step={step}
         value={value}
+        disabled={disabled}
         onChange={(event) => onChange(Number(event.target.value))}
         aria-label={label}
       />
+      {helper && <span className="mt-1 block text-[0.6rem] leading-4 text-white/35">{helper}</span>}
     </label>
   );
 }
