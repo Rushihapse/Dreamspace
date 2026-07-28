@@ -1,4 +1,4 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Instagram, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { company } from '../data/company';
@@ -40,6 +40,24 @@ export default function Footer() {
             ))}
             <a href={`mailto:${company.email}`} className="link-underline w-fit">{company.email}</a>
             <span>{company.address}</span>
+          </div>
+          <div className="mt-5 flex items-center gap-3">
+            <a
+              href={company.instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Dreamspace on Instagram"
+              className="focus-ring grid h-10 w-10 place-items-center border border-white/25 text-white/70 transition hover:border-gold hover:text-gold"
+            >
+              <Instagram size={18} />
+            </a>
+            <a
+              href={`mailto:${company.email}`}
+              aria-label="Email Dreamspace"
+              className="focus-ring grid h-10 w-10 place-items-center border border-white/25 text-white/70 transition hover:border-gold hover:text-gold"
+            >
+              <Mail size={18} />
+            </a>
           </div>
           <Link to="/contact" className="mt-7 inline-flex items-center gap-2 border border-white/25 px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:bg-gold">
             {t('common.startProject')} <ArrowUpRight size={16} />
