@@ -67,7 +67,7 @@ export default function CinematicRouteTransition({ pathname }) {
 
     const timer = window.setTimeout(() => {
       setTransition(null);
-    }, 1120);
+    }, 700);
 
     return () => window.clearTimeout(timer);
   }, [pathname]);
@@ -81,7 +81,7 @@ export default function CinematicRouteTransition({ pathname }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.18 }}
+          transition={{ duration: 0.15 }}
           aria-hidden="true"
         >
           <motion.div
@@ -89,14 +89,14 @@ export default function CinematicRouteTransition({ pathname }) {
             initial={{ x: '-100%' }}
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
-            transition={{ duration: 0.82, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           />
           <motion.div
             className="absolute inset-y-0 right-0 w-1/2 bg-[#171717]"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ duration: 0.82, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           />
 
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(180,138,90,0.18),transparent_32%)]" />
@@ -108,23 +108,23 @@ export default function CinematicRouteTransition({ pathname }) {
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover opacity-55"
                 initial={{ scale: 1, y: 0 }}
-                animate={{ scale: 1.08, y: '-14%' }}
-                transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
+                animate={{ scale: 1.05, y: '-8%' }}
+                transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
               />
               <motion.img
                 src={transition.to.image}
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover"
-                initial={{ clipPath: 'inset(100% 0 0 0)', scale: 1.12 }}
+                initial={{ clipPath: 'inset(100% 0 0 0)', scale: 1.08 }}
                 animate={{ clipPath: 'inset(0% 0 0 0)', scale: 1 }}
-                transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
+                transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
               />
               <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,17,0.62),rgba(17,17,17,0.16),rgba(17,17,17,0.7))]" />
               <motion.div
                 className="absolute inset-x-0 bottom-0 h-px bg-gold"
                 initial={{ scaleX: 0, transformOrigin: 'left' }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
+                transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
               />
             </div>
 
@@ -144,14 +144,14 @@ export default function CinematicRouteTransition({ pathname }) {
             initial={{ y: '-100%' }}
             animate={{ y: 0 }}
             exit={{ y: '-100%' }}
-            transition={{ duration: 0.72, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           />
           <motion.div
             className="absolute inset-x-0 bottom-0 h-[9vh] bg-dark"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
-            transition={{ duration: 0.72, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           />
         </motion.div>
       )}

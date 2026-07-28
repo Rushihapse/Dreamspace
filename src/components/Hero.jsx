@@ -42,13 +42,13 @@ export default function Hero() {
         className="absolute left-0 right-0 top-0 h-[9vh] bg-dark"
         initial={{ y: '-100%' }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       />
       <motion.div
         className="absolute bottom-0 left-0 right-0 h-[7vh] bg-dark"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       />
       <div className="container-page relative grid min-h-screen items-end gap-10 pb-20 pt-36 lg:grid-cols-[1fr_360px] lg:pb-24">
         <div className="max-w-5xl">
