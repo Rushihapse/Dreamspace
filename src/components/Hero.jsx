@@ -39,12 +39,6 @@ export default function Hero() {
       <div className="absolute inset-0 bg-dark/38" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_42%,rgba(180,138,90,0.16),transparent_30%),linear-gradient(to_top,#111_4%,rgba(17,17,17,0.22)_48%,rgba(17,17,17,0.66)_100%)]" />
       <motion.div
-        className="absolute left-0 right-0 top-0 h-[9vh] bg-dark"
-        initial={{ y: '-100%' }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      />
-      <motion.div
         className="absolute bottom-0 left-0 right-0 h-[7vh] bg-dark"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
