@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const SITE_URL = 'https://www.dreamspace.in';
+const SITE_URL = 'https://www.dreamspaceinfra.com';
 const DEFAULT_IMAGE = `${SITE_URL}/logo.png`;
 
 function upsertMeta(attr, key, content) {
@@ -23,11 +23,12 @@ function upsertLink(rel, href) {
   el.setAttribute('href', href);
 }
 
-export default function SeoTags({ title, description, path = '/', image = DEFAULT_IMAGE, jsonLd }) {
+export default function SeoTags({ title, description, path = '/', image = DEFAULT_IMAGE, jsonLd, noindex = false }) {
   useEffect(() => {
     const url = `${SITE_URL}${path}`;
     document.title = title;
     upsertMeta('name', 'description', description);
+    upsertMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
     upsertLink('canonical', url);
     upsertMeta('property', 'og:type', 'website');
     upsertMeta('property', 'og:title', title);
@@ -51,7 +52,7 @@ export default function SeoTags({ title, description, path = '/', image = DEFAUL
     } else if (script) {
       script.remove();
     }
-  }, [title, description, path, image, jsonLd]);
+  }, [title, description, path, image, jsonLd, noindex]);
 
   return null;
 }

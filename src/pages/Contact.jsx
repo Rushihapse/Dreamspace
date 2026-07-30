@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Building2, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
-import SeoTags from '../components/SeoTags';
+import SeoTags, { SITE_URL } from '../components/SeoTags';
 import ThankYouModal from '../components/ThankYouModal';
 import { company } from '../data/company';
 import { services } from '../data/services';
@@ -13,6 +13,25 @@ const faqs = [
   ['Can you support property management or leasing after a project?', 'Yes. The company scope includes rental, leasing, tenant coordination, property management and long-term property advisory.'],
   ['Do you work outside Maharashtra?', 'The current focus is Pune and Maharashtra, with project-specific consultation possible after review.']
 ];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([question, answer]) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer }
+  }))
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Contact', item: `${SITE_URL}/contact` }
+  ]
+};
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -57,9 +76,10 @@ export default function Contact() {
   return (
     <>
       <SeoTags
-        title="Contact | Dreamspace Infrastructure & Liaisoning Pvt Ltd"
-        description="Contact Dreamspace Infrastructure & Liaisoning Pvt Ltd for architecture, approvals, liaisoning, real estate consultancy and property lifecycle support in Maharashtra, India."
+        title="Contact Dreamspace | Architecture & Liaisoning Consultants in Pune"
+        description="Get in touch with Dreamspace for architecture, planning approvals, liaisoning, real estate and property management services in Pune. Call, WhatsApp or email for a free consultation."
         path="/contact"
+        jsonLd={[faqJsonLd, breadcrumbJsonLd]}
       />
       <PageHeader title={t('contact.title')} subtitle={t('contact.subtitle')} image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85" />
       <section className="py-16 sm:py-24">

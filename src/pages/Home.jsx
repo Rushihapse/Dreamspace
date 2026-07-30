@@ -20,24 +20,53 @@ import { company } from '../data/company';
 
 const localBusinessJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': ['LocalBusiness', 'GeneralContractor', 'RealEstateAgent'],
+  '@id': `${SITE_URL}/#organization`,
   name: company.name,
   alternateName: company.shortName,
   url: SITE_URL,
+  logo: `${SITE_URL}/logo.png`,
+  image: `${SITE_URL}/logo.png`,
   telephone: company.phones[0],
   email: company.email,
   address: {
     '@type': 'PostalAddress',
     streetAddress: company.address,
+    addressLocality: 'Pune',
     addressRegion: 'Maharashtra',
     addressCountry: 'IN'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 18.6519,
+    longitude: 73.8111
   },
   founder: {
     '@type': 'Person',
     name: company.founder
   },
-  areaServed: company.region,
-  description: company.mission
+  areaServed: [
+    { '@type': 'City', name: 'Pune' },
+    { '@type': 'AdministrativeArea', name: 'Pimpri-Chinchwad' },
+    { '@type': 'AdministrativeArea', name: 'Maharashtra' },
+    ...company.authorities.map((authority) => ({ '@type': 'AdministrativeArea', name: authority }))
+  ],
+  sameAs: [company.instagramUrl],
+  description: company.mission,
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Dreamspace Services',
+    itemListElement: services.map((service) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: service.title.en,
+        description: service.short.en,
+        areaServed: 'Pune, Maharashtra',
+        url: `${SITE_URL}/services/${service.slug}`
+      }
+    }))
+  }
 };
 
 const engagementSteps = ['Understand Requirement', 'Site & Document Study', 'Concept & Planning', 'Approval Support', 'Execution Guidance'];
@@ -55,8 +84,8 @@ export default function Home() {
   return (
     <>
       <SeoTags
-        title="Dreamspace Infrastructure & Liaisoning Pvt Ltd | Planning, Liaisoning and Real Estate"
-        description="Dreamspace Infrastructure & Liaisoning Pvt Ltd provides integrated architecture, planning approvals, liaisoning, real estate consultancy and property lifecycle solutions in Pune and Maharashtra."
+        title="Architecture, Planning & Liaisoning Consultants in Pune | Dreamspace"
+        description="Dreamspace Infrastructure & Liaisoning Pvt Ltd offers architecture, planning approvals, liaisoning, real estate consultancy and property management services in Pune, PCMC, PMC, PMRDA & MIDC. Book a free consultation."
         path="/"
         jsonLd={localBusinessJsonLd}
       />

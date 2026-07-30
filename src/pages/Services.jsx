@@ -3,10 +3,30 @@ import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
 import ServiceCard from '../components/ServiceCard';
 import CTASection from '../components/CTASection';
-import SeoTags from '../components/SeoTags';
+import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { services, serviceGroups } from '../data/services';
 
 const filters = [{ key: 'All', label: 'All' }, ...serviceGroups.map((group) => ({ key: group.key, label: group.label }))];
+
+const servicesJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: services.map((service, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: `${SITE_URL}/services/${service.slug}`,
+    name: service.title.en
+  }))
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/services` }
+  ]
+};
 
 export default function Services() {
   const { t } = useTranslation();
@@ -16,9 +36,10 @@ export default function Services() {
   return (
     <>
       <SeoTags
-        title="Services | Dreamspace Infrastructure & Liaisoning Pvt Ltd"
-        description="Integrated architecture, planning, approvals, liaisoning, property consultancy, management and construction support by Dreamspace Infrastructure & Liaisoning Pvt Ltd."
+        title="Architecture, Planning & Property Services in Pune | Dreamspace"
+        description="14 integrated services in Pune: architecture & design, planning approvals, liaisoning, real estate consultancy, property management, investment advisory and construction support."
         path="/services"
+        jsonLd={[servicesJsonLd, breadcrumbJsonLd]}
       />
       <PageHeader title={t('services.title')} subtitle={t('services.subtitle')} image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=85" />
       <section className="py-16 sm:py-24">

@@ -5,7 +5,7 @@ import ImageReveal from '../components/ImageReveal';
 import PageHeader from '../components/PageHeader';
 import SectionTitle from '../components/SectionTitle';
 import PropertyLifecycle from '../components/PropertyLifecycle';
-import SeoTags from '../components/SeoTags';
+import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { services } from '../data/services';
 import { company } from '../data/company';
 
@@ -17,15 +17,25 @@ const trustFacts = [
   { value: company.region, label: 'Regional Focus' }
 ];
 
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+    { '@type': 'ListItem', position: 2, name: 'About', item: `${SITE_URL}/about` }
+  ]
+};
+
 export default function About() {
   const { t } = useTranslation();
 
   return (
     <>
       <SeoTags
-        title="About | Dreamspace Infrastructure & Liaisoning Pvt Ltd"
-        description={`Learn about ${company.name}, founded by ${company.founder}, and its integrated architecture, planning, liaisoning and property lifecycle approach.`}
+        title="About Dreamspace | Architecture & Liaisoning Firm in Pune"
+        description={`${company.name}, founded by ${company.founder}, is a Pune-based consultancy delivering integrated architecture, planning approvals, liaisoning and real estate solutions across PCMC, PMC and PMRDA.`}
         path="/about"
+        jsonLd={breadcrumbJsonLd}
       />
       <PageHeader
         title={t('about.title')}

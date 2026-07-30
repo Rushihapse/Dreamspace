@@ -2,7 +2,7 @@ import { Navigate, Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import CTASection from '../components/CTASection';
-import SeoTags from '../components/SeoTags';
+import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { blogs } from '../data/blogs';
 
 export default function BlogDetail() {
@@ -13,9 +13,41 @@ export default function BlogDetail() {
 
   const related = blogs.filter((item) => item.slug !== slug).slice(0, 3);
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: blog.title,
+    description: blog.excerpt,
+    image: blog.image,
+    datePublished: blog.date,
+    author: { '@type': 'Organization', name: 'Dreamspace Infrastructure & Liaisoning Pvt Ltd' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Dreamspace Infrastructure & Liaisoning Pvt Ltd',
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.png` }
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blogs/${blog.slug}` }
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Journal', item: `${SITE_URL}/blogs` },
+      { '@type': 'ListItem', position: 3, name: blog.title, item: `${SITE_URL}/blogs/${blog.slug}` }
+    ]
+  };
+
   return (
     <>
-      <SeoTags title={`${blog.title} | DREAMSPACE Journal`} description={blog.excerpt} path={`/blogs/${blog.slug}`} image={blog.image} />
+      <SeoTags
+        title={`${blog.title} | Dreamspace Journal`}
+        description={blog.excerpt}
+        path={`/blogs/${blog.slug}`}
+        image={blog.image}
+        jsonLd={[articleJsonLd, breadcrumbJsonLd]}
+      />
       <PageHeader title={blog.title} subtitle={`${formatDate(blog.date)} / Dreamspace Team / ${blog.readingTime}`} image={blog.image} />
       <article className="py-16 sm:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-[0.35fr_0.65fr]">

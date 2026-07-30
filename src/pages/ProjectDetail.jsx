@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import CTASection from '../components/CTASection';
 import ImageReveal from '../components/ImageReveal';
-import SeoTags from '../components/SeoTags';
+import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { projects } from '../data/projects';
 
 export default function ProjectDetail() {
@@ -15,9 +15,25 @@ export default function ProjectDetail() {
   const currentIndex = projects.findIndex((item) => item.slug === slug);
   const nextProject = projects[(currentIndex + 1) % projects.length];
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE_URL}/projects` },
+      { '@type': 'ListItem', position: 3, name: project.title, item: `${SITE_URL}/projects/${project.slug}` }
+    ]
+  };
+
   return (
     <>
-      <SeoTags title={`${project.title} | DREAMSPACE Projects`} description={project.overview} path={`/projects/${project.slug}`} image={project.image} />
+      <SeoTags
+        title={`${project.title} in ${project.location} | Dreamspace Projects`}
+        description={`${project.overview} A ${project.category.toLowerCase()} project by Dreamspace in ${project.location}.`}
+        path={`/projects/${project.slug}`}
+        image={project.image}
+        jsonLd={breadcrumbJsonLd}
+      />
       <PageHeader title={project.title} subtitle={`${project.category} / ${project.location}`} image={project.image} />
       <section className="py-16 sm:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">

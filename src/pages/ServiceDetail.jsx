@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowUpRight, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
 import CTASection from '../components/CTASection';
-import SeoTags from '../components/SeoTags';
+import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { serviceFaqs, services } from '../data/services';
 
 export default function ServiceDetail() {
@@ -14,9 +14,55 @@ export default function ServiceDetail() {
 
   if (!service) return <Navigate to="/services" replace />;
 
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: service.title.en,
+    name: `${service.title.en} in Pune`,
+    description: service.description,
+    areaServed: { '@type': 'City', name: 'Pune' },
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'Dreamspace Infrastructure & Liaisoning Pvt Ltd',
+      url: SITE_URL
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: service.title.en,
+      itemListElement: service.what.map((item) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: item } }))
+    },
+    ...(service.industriesServed?.length > 0 && { audience: service.industriesServed.map((name) => ({ '@type': 'Audience', audienceType: name })) })
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/services` },
+      { '@type': 'ListItem', position: 3, name: service.title.en, item: `${SITE_URL}/services/${service.slug}` }
+    ]
+  };
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: serviceFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a }
+    }))
+  };
+
   return (
     <>
-      <SeoTags title={`${service.title.en} | DREAMSPACE Services`} description={service.short.en} path={`/services/${service.slug}`} image={service.image} />
+      <SeoTags
+        title={`${service.title.en} in Pune | Dreamspace`}
+        description={`${service.short.en} Serving Pune, PCMC, PMC and PMRDA.`}
+        path={`/services/${service.slug}`}
+        image={service.image}
+        jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+      />
       <PageHeader title={service.title[language] || service.title.en} subtitle={service.subtitle} image={service.image} />
       <section className="py-16 sm:py-24">
         <div className="container-page grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
