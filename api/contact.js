@@ -29,7 +29,7 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL || 'dreamspaceliaisoning@gmail.com';
+  const to = process.env.CONTACT_TO_EMAIL || 'office@dreamspaceinfra.com';
   const from = process.env.CONTACT_FROM_EMAIL || 'Dreamspace <onboarding@resend.dev>';
 
   if (!apiKey) {

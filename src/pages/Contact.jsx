@@ -121,7 +121,7 @@ export default function Contact() {
           </div>
           <div className="grid min-w-0 gap-5">
             <Info icon={<Phone size={20} />} label="Phone" value={company.phones.join(' | ')} />
-            <Info icon={<Mail size={20} />} label="Email" value={company.email} />
+            <Info icon={<Mail size={20} />} label="Email" value={company.email} href={`mailto:${company.email}`} />
             <Info icon={<MapPin size={20} />} label="Address" value={company.address} />
             <Info icon={<Building2 size={20} />} label="Registered Office" value={company.registeredOffice} />
             <a href={`https://wa.me/${company.whatsapp}`} target="_blank" rel="noreferrer" className="flex min-w-0 items-center gap-4 bg-gold p-6 text-white transition hover:bg-dark">
@@ -170,13 +170,19 @@ function Field({ label, name, type = 'text', required = false }) {
   );
 }
 
-function Info({ icon, label, value }) {
+function Info({ icon, label, value, href }) {
   return (
     <div className="flex min-w-0 gap-4 border border-dark/12 bg-white p-6">
       <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold/15 text-gold">{icon}</span>
       <div className="min-w-0">
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">{label}</p>
-        <p className="mt-2 break-words font-semibold">{value}</p>
+        {href ? (
+          <a href={href} className="link-underline mt-2 inline-block break-words font-semibold">
+            {value}
+          </a>
+        ) : (
+          <p className="mt-2 break-words font-semibold">{value}</p>
+        )}
       </div>
     </div>
   );

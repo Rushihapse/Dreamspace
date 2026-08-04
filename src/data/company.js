@@ -6,7 +6,7 @@ export const company = {
   founderTitle: 'Founder & Principal Consultant',
   phones: ['+91 87672 81874', '+91 91307 12555'],
   whatsapp: '918767281874',
-  email: 'dreamspaceliaisoning@gmail.com',
+  email: 'office@dreamspaceinfra.com',
   instagram: 'the_dreamspace_',
   instagramUrl: 'https://www.instagram.com/the_dreamspace_/',
   address: 'Shop No-10, Ground Floor, Shreeji Terrace Apartment, Purnanagar, Chikhali, Pradhikaran, Pune',
