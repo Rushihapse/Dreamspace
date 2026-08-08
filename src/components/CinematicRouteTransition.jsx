@@ -134,7 +134,7 @@ export default function CinematicRouteTransition({ pathname }) {
                 <p className="serif-heading mt-1 text-2xl sm:text-4xl">{transition.to.label}</p>
               </div>
               <p className="hidden text-[0.62rem] font-bold uppercase tracking-[0.18em] text-white/45 sm:block">
-                Infrastructure / Planning / Liaisoning / Real Estate
+                {company.slogan}
               </p>
             </div>
           </div>

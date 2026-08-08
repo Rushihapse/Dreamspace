@@ -18,7 +18,8 @@ export default function Footer() {
       <div className="container-page grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
           <img src="/logo.png" alt={company.shortName} className="h-20 w-auto" />
-          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-gold">{company.name}</p>
+          <p className="serif-heading mt-4 text-2xl text-white">{company.slogan}</p>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-gold">{company.name}</p>
           <p className="mt-4 max-w-md text-sm leading-7 text-white/65">{t('footer.text')}</p>
           <p className="mt-8 text-xs uppercase tracking-[0.18em] text-gold">Founder: {company.founder}</p>
         </div>

@@ -2,6 +2,7 @@ export const company = {
   name: 'Dreamspace Infrastructure & Liaisoning Pvt Ltd',
   shortName: 'DREAMSPACE',
   tagline: 'Infrastructure | Liaisoning | Planning | Real Estate',
+  slogan: 'From Land To Landmark',
   founder: 'A. D. Chougule',
   founderTitle: 'Founder & Principal Consultant',
   phones: ['+91 87672 81874', '+91 91307 12555'],
@@ -27,11 +28,12 @@ export const company = {
     'To establish Dreamspace Infrastructure & Liaisoning Pvt Ltd as a trusted and innovative organization delivering integrated architecture, planning, liaisoning, real estate and property solutions through professional excellence, transparency and sustainable development.',
   media: {
     heroVideos: [
-      'https://videos.pexels.com/video-files/11027235/11027235-hd_3840_2160_25fps.mp4',
-      'https://videos.pexels.com/video-files/6950317/6950317-uhd_3840_2160_30fps.mp4',
-      'https://videos.pexels.com/video-files/34575802/14651405_3840_2160_50fps.mp4',
-      'https://videos.pexels.com/video-files/32636393/13916896_3840_2160_30fps.mp4'
+      '/videos/hero-aerial-building-night.mp4',
+      '/videos/hero-city-skyline.mp4',
+      '/videos/hero-construction-site.mp4',
+      '/videos/hero-highrise-building.mp4',
+      '/videos/hero-modern-skyscrapers.mp4'
     ],
-    heroVideoPage: 'https://www.pexels.com/video/drone-shot-of-modern-city-11027235/'
+    heroVideoPage: 'https://www.pexels.com/video/aerial-shot-of-a-modern-building-2386459/'
   }
 };

@@ -50,7 +50,7 @@ export default function PageHeader({ title, subtitle, image = fallbackImage, med
       <div className="absolute inset-x-0 bottom-0 z-10 hidden border-y border-white/10 bg-dark/20 backdrop-blur-sm sm:block">
         <div className="container-page flex items-center justify-between gap-4 py-3">
           <span className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-white/45">
-            Infrastructure / Planning / Liaisoning / Real Estate
+            {company.slogan}
           </span>
           <span className="h-1 w-12 bg-gold" />
         </div>

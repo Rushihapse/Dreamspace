@@ -1,41 +1,111 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import AnimatedText from './AnimatedText';
 import { company } from '../data/company';
 
+const SLIDE_DURATION = 9000;
+const toPoster = (video) => video.replace(/\.mp4$/, '-poster.jpg');
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    const onChange = (event) => setIsMobile(event.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
+  return isMobile;
+}
+
 export default function Hero() {
   const { t } = useTranslation();
   const [activeVideo, setActiveVideo] = useState(0);
-  const heroVideo = company.media.heroVideos[Math.min(activeVideo, company.media.heroVideos.length - 1)];
+  const brokenVideos = useRef(new Set());
+  const isMobile = useIsMobile();
+  const videoCount = company.media.heroVideos.length;
+  const heroVideo = company.media.heroVideos[activeVideo % videoCount];
+
+  useEffect(() => {
+    if (videoCount < 2) return undefined;
+    const timer = setInterval(() => {
+      setActiveVideo((index) => {
+        let next = (index + 1) % videoCount;
+        let guard = 0;
+        while (brokenVideos.current.has(next) && guard < videoCount) {
+          next = (next + 1) % videoCount;
+          guard += 1;
+        }
+        return next;
+      });
+    }, SLIDE_DURATION);
+    return () => clearInterval(timer);
+  }, [videoCount]);
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-dark text-white">
-      <motion.video
-        key={heroVideo}
-        src={heroVideo}
-        className="absolute inset-0 h-full w-full object-cover opacity-100"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-        disablePictureInPicture
-        initial={{ scale: 1.06 }}
-        animate={{ scale: 1.01 }}
-        transition={{ duration: 6, ease: 'easeOut' }}
-        onError={() => {
-          if (activeVideo < company.media.heroVideos.length - 1) {
-            setActiveVideo((index) => index + 1);
-          }
-        }}
-        onCanPlay={(event) => {
-          event.currentTarget.play().catch(() => {});
-        }}
-      />
+      <AnimatePresence>
+        {isMobile ? (
+          <motion.img
+            key={heroVideo}
+            src={toPoster(heroVideo)}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1.01 }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 1.1, ease: 'easeInOut' }, scale: { duration: SLIDE_DURATION / 1000, ease: 'easeOut' } }}
+          />
+        ) : (
+          <motion.video
+            key={heroVideo}
+            src={heroVideo}
+            poster={toPoster(heroVideo)}
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            disablePictureInPicture
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1.01 }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 1.4, ease: 'easeInOut' }, scale: { duration: SLIDE_DURATION / 1000, ease: 'easeOut' } }}
+            onError={() => {
+              brokenVideos.current.add(activeVideo);
+              setActiveVideo((index) => (index + 1) % videoCount);
+            }}
+            onCanPlay={(event) => {
+              event.currentTarget.play().catch(() => {});
+            }}
+          />
+        )}
+      </AnimatePresence>
+      <div className="absolute bottom-20 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
+        {company.media.heroVideos.map((video, index) => (
+          <button
+            key={video}
+            type="button"
+            aria-label={`Show background video ${index + 1}`}
+            aria-current={index === activeVideo}
+            onClick={() => setActiveVideo(index)}
+            className={`h-1.5 rounded-full transition-all duration-500 ${
+              index === activeVideo ? 'w-7 bg-gold' : 'w-1.5 bg-white/40 hover:bg-white/70'
+            }`}
+          />
+        ))}
+      </div>
       <div className="absolute inset-0 bg-dark/38" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_42%,rgba(180,138,90,0.16),transparent_30%),linear-gradient(to_top,#111_4%,rgba(17,17,17,0.22)_48%,rgba(17,17,17,0.66)_100%)]" />
       <motion.div
@@ -52,7 +122,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Integrated Infrastructure & Liaisoning Studio
+            {company.slogan}
           </motion.p>
           <h1 className="serif-heading text-5xl font-semibold leading-[0.98] sm:text-7xl lg:text-8xl">
             <AnimatedText>{t('home.hero.title1')}</AnimatedText>
@@ -109,7 +179,7 @@ export default function Hero() {
         <ArrowDown size={16} />
       </div>
       <div className="absolute bottom-7 left-6 hidden text-[0.66rem] font-bold uppercase tracking-[0.18em] text-white/50 sm:block">
-        Urban Infrastructure / Planning / Liaisoning / Real Estate
+        {company.tagline}
       </div>
     </section>
   );
