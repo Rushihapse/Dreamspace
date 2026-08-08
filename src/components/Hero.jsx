@@ -9,26 +9,10 @@ import { company } from '../data/company';
 const SLIDE_DURATION = 9000;
 const toPoster = (video) => video.replace(/\.mp4$/, '-poster.jpg');
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
-  );
-
-  useEffect(() => {
-    const mql = window.matchMedia('(max-width: 767px)');
-    const onChange = (event) => setIsMobile(event.matches);
-    mql.addEventListener('change', onChange);
-    return () => mql.removeEventListener('change', onChange);
-  }, []);
-
-  return isMobile;
-}
-
 export default function Hero() {
   const { t } = useTranslation();
   const [activeVideo, setActiveVideo] = useState(0);
   const brokenVideos = useRef(new Set());
-  const isMobile = useIsMobile();
   const videoCount = company.media.heroVideos.length;
   const heroVideo = company.media.heroVideos[activeVideo % videoCount];
 
@@ -51,46 +35,30 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden bg-dark text-white">
       <AnimatePresence>
-        {isMobile ? (
-          <motion.img
-            key={heroVideo}
-            src={toPoster(heroVideo)}
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-            loading="eager"
-            decoding="async"
-            aria-hidden="true"
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1.01 }}
-            exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1.1, ease: 'easeInOut' }, scale: { duration: SLIDE_DURATION / 1000, ease: 'easeOut' } }}
-          />
-        ) : (
-          <motion.video
-            key={heroVideo}
-            src={heroVideo}
-            poster={toPoster(heroVideo)}
-            className="absolute inset-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            disablePictureInPicture
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1.01 }}
-            exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1.4, ease: 'easeInOut' }, scale: { duration: SLIDE_DURATION / 1000, ease: 'easeOut' } }}
-            onError={() => {
-              brokenVideos.current.add(activeVideo);
-              setActiveVideo((index) => (index + 1) % videoCount);
-            }}
-            onCanPlay={(event) => {
-              event.currentTarget.play().catch(() => {});
-            }}
-          />
-        )}
+        <motion.video
+          key={heroVideo}
+          src={heroVideo}
+          poster={toPoster(heroVideo)}
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          disablePictureInPicture
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1.01 }}
+          exit={{ opacity: 0 }}
+          transition={{ opacity: { duration: 1.4, ease: 'easeInOut' }, scale: { duration: SLIDE_DURATION / 1000, ease: 'easeOut' } }}
+          onError={() => {
+            brokenVideos.current.add(activeVideo);
+            setActiveVideo((index) => (index + 1) % videoCount);
+          }}
+          onCanPlay={(event) => {
+            event.currentTarget.play().catch(() => {});
+          }}
+        />
       </AnimatePresence>
       <div className="absolute bottom-20 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
         {company.media.heroVideos.map((video, index) => (
