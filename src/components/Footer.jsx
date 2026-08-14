@@ -69,6 +69,9 @@ export default function Footer() {
         <p className="text-xs normal-case tracking-[0.02em] text-white/40">
           <span className="font-bold uppercase tracking-[0.14em] text-white/55">Registered Office:</span> {company.registeredOffice}
         </p>
+        <p className="mt-2 text-xs normal-case tracking-[0.02em] text-white/40">
+          <span className="font-bold uppercase tracking-[0.14em] text-white/55">CIN:</span> {company.cin}
+        </p>
         <div className="mt-3 flex flex-col gap-3 text-xs uppercase tracking-[0.14em] text-white/45 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; 2026 {company.name}</p>
           <p>{company.tagline}</p>

@@ -12,6 +12,7 @@ export const company = {
   instagramUrl: 'https://www.instagram.com/the_dreamspace_/',
   address: 'Shop No-10, Ground Floor, Shreeji Terrace Apartment, Purnanagar, Chikhali, Pradhikaran, Pune',
   registeredOffice: 'H.S. No. 27, Matoshri Niwas, Mahadev Nagar, Kusgaon, Bhor, Pune- 412205, Maharashtra',
+  cin: 'U71100PN2026PTC258172',
   region: 'Pune, Maharashtra',
   authorities: ['PMRDA', 'PCMC', 'PMC', 'MIDC', 'MSRDC'],
   cardServices: [
