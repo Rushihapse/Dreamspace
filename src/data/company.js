@@ -28,12 +28,12 @@ export const company = {
     'To establish Dreamspace Infrastructure & Liaisoning Pvt Ltd as a trusted and innovative organization delivering integrated architecture, planning, liaisoning, real estate and property solutions through professional excellence, transparency and sustainable development.',
   media: {
     heroVideos: [
-      '/videos/hero-aerial-building-night.mp4',
+      '/videos/hero-construction-to-city.mp4',
       '/videos/hero-city-skyline.mp4',
       '/videos/hero-construction-site.mp4',
       '/videos/hero-highrise-building.mp4',
       '/videos/hero-modern-skyscrapers.mp4'
     ],
-    heroVideoPage: 'https://www.pexels.com/video/aerial-shot-of-a-modern-building-2386459/'
+    heroVideoPage: 'https://www.pexels.com/video/drone-footage-of-a-building-construction-in-a-city-14134287/'
   }
 };
