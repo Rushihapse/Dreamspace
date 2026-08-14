@@ -3,7 +3,7 @@ export const company = {
   shortName: 'DREAMSPACE',
   tagline: 'Infrastructure | Liaisoning | Planning | Real Estate',
   slogan: 'From Land To Landmark',
-  founder: 'A. D. Chougule',
+  founder: 'Ashitosh D. Chaugule',
   founderTitle: 'Founder & Principal Consultant',
   phones: ['+91 87672 81874', '+91 91307 12555'],
   whatsapp: '918767281874',
