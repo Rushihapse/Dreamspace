@@ -1,6 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
 import { Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import Analytics from './components/Analytics';
 import CinematicRouteTransition from './components/CinematicRouteTransition';
 import CursorFollower from './components/CursorFollower';
 import Footer from './components/Footer';
@@ -20,6 +21,7 @@ export default function App() {
         Skip to content
       </a>
       <ScrollToTop />
+      <Analytics />
       <Navbar />
       <CursorFollower />
       <CinematicRouteTransition pathname={location.pathname} />
