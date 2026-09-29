@@ -10,7 +10,7 @@ export const company = {
   email: 'office@dreamspaceinfra.com',
   instagram: 'the_dreamspace_',
   instagramUrl: 'https://www.instagram.com/the_dreamspace_/',
-  address: 'H.S. No. 27, Matoshri, Niwas, Mahadev Nagar, Kusgaon, Bhor, Pune- 412205, Maharashtra',
+  address: 'Office No. 1313, 13th Floor, VJ Indilife,Beside Tip Top Hotel, Pune-Mumbai Highway, Wakad, Pune - 411057',
   registeredOffice: 'H.S. No. 27, Matoshri, Niwas, Mahadev Nagar, Kusgaon, Bhor, Pune- 412205, Maharashtra',
   cin: 'U71100PN2026PTC258172',
   region: 'Pune, Maharashtra',
