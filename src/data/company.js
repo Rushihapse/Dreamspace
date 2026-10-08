@@ -5,7 +5,7 @@ export const company = {
   slogan: 'From Land To Landmark',
   founder: 'Ashitosh D. Chougule',
   founderTitle: 'Founder & Principal Consultant',
-  phones: ['+91 9665847993', '+91 7776886565'],
+  phones: ['+91 9665847993', '+91 9822852156'],
   whatsapp: '919665847993',
   email: 'office@dreamspaceinfra.com',
   instagram: 'the_dreamspace_',
