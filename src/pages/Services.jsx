@@ -5,6 +5,7 @@ import ServiceCard from '../components/ServiceCard';
 import CTASection from '../components/CTASection';
 import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { services, serviceGroups } from '../data/services';
+import { servicesSeoKeywords } from '../data/seo';
 
 const filters = [{ key: 'All', label: 'All' }, ...serviceGroups.map((group) => ({ key: group.key, label: group.label }))];
 
@@ -39,6 +40,8 @@ export default function Services() {
         title="Architecture, Planning & Property Services in Pune | Dreamspace"
         description="14 integrated services in Pune: architecture & design, planning approvals, liaisoning, real estate consultancy, property management, investment advisory and construction support."
         path="/services"
+        pageType="CollectionPage"
+        keywords={servicesSeoKeywords}
         jsonLd={[servicesJsonLd, breadcrumbJsonLd]}
       />
       <PageHeader title={t('services.title')} subtitle={t('services.subtitle')} image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=85" />

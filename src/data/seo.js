@@ -27,6 +27,16 @@ export const feasibilitySeoKeywords = [
 
 export const homeSeoKeywords = [...coreSeoKeywords, ...feasibilitySeoKeywords];
 
+export const aboutSeoKeywords = [...coreSeoKeywords, 'Dreamspace Infrastructure Pune', 'architecture and liaisoning company Pune', 'property consultants Pune Maharashtra'];
+
+export const servicesSeoKeywords = [...coreSeoKeywords, 'architectural design services Pune', 'building approval consultant Pune', 'land development consultancy Pune', 'construction project management Pune'];
+
+export const projectsSeoKeywords = ['architecture projects Pune', 'residential projects Pune', 'commercial architecture Pune', 'planning and land conversion projects Maharashtra', 'interior design projects Pune'];
+
+export const blogSeoKeywords = ['architecture insights Pune', 'building permission guide Maharashtra', 'planning approval articles Pune', 'liaisoning guidance Maharashtra', 'property development insights Pune'];
+
+export const contactSeoKeywords = [...coreSeoKeywords, 'contact architect Pune', 'building permission consultation Pune', 'liaisoning consultant near me', 'property consultation Pune'];
+
 export const feasibilityFaqs = [
   {
     question: 'What does a residential plot feasibility check cover?',

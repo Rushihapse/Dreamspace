@@ -4,6 +4,7 @@ import BlogCard from '../components/BlogCard';
 import CTASection from '../components/CTASection';
 import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { blogs } from '../data/blogs';
+import { blogSeoKeywords } from '../data/seo';
 
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
@@ -23,7 +24,17 @@ export default function Blogs() {
         title="Architecture & Planning Insights | Dreamspace Journal, Pune"
         description="Practical articles on architecture, building permissions, zone conversion and liaisoning for property owners and developers in Pune, Maharashtra."
         path="/blogs"
-        jsonLd={breadcrumbJsonLd}
+        pageType="CollectionPage"
+        keywords={blogSeoKeywords}
+        jsonLd={[{
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          '@id': `${SITE_URL}/blogs#blog`,
+          name: 'Dreamspace Architecture & Planning Journal',
+          url: `${SITE_URL}/blogs`,
+          publisher: { '@id': `${SITE_URL}/#organization` },
+          blogPost: blogs.map((blog) => ({ '@type': 'BlogPosting', headline: blog.title, url: `${SITE_URL}/blogs/${blog.slug}` }))
+        }, breadcrumbJsonLd]}
       />
       <PageHeader title={t('blogs.title')} subtitle={t('blogs.subtitle')} image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1800&q=85" />
       <section className="py-16 sm:py-24">

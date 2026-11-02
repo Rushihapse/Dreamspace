@@ -32,7 +32,20 @@ export default function ProjectDetail() {
         description={`${project.overview} A ${project.category.toLowerCase()} project by Dreamspace in ${project.location}.`}
         path={`/projects/${project.slug}`}
         image={project.image}
-        jsonLd={breadcrumbJsonLd}
+        keywords={[`${project.category.toLowerCase()} project ${project.location}`, `architecture project ${project.location}`, 'Dreamspace projects Pune', ...(project.servicesDelivered || [])]}
+        jsonLd={[{
+          '@context': 'https://schema.org',
+          '@type': 'CreativeWork',
+          '@id': `${SITE_URL}/projects/${project.slug}#project`,
+          name: project.title,
+          description: project.overview,
+          image: project.image,
+          url: `${SITE_URL}/projects/${project.slug}`,
+          genre: project.category,
+          locationCreated: { '@type': 'Place', name: project.location },
+          creator: { '@id': `${SITE_URL}/#organization` },
+          keywords: [project.category, project.location, ...(project.servicesDelivered || [])].join(', ')
+        }, breadcrumbJsonLd]}
       />
       <PageHeader title={project.title} subtitle={`${project.category} / ${project.location}`} image={project.image} />
       <section className="py-16 sm:py-24">

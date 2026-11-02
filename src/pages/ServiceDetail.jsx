@@ -61,6 +61,7 @@ export default function ServiceDetail() {
         description={`${service.short.en} Serving Pune, PCMC, PMC and PMRDA.`}
         path={`/services/${service.slug}`}
         image={service.image}
+        keywords={[`${service.title.en} Pune`, `${service.title.en} Maharashtra`, 'Dreamspace services', ...(service.industriesServed || [])]}
         jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
       />
       <PageHeader title={service.title[language] || service.title.en} subtitle={service.subtitle} image={service.image} />

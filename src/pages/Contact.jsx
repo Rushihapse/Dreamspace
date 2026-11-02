@@ -7,6 +7,7 @@ import ThankYouModal from '../components/ThankYouModal';
 import { company } from '../data/company';
 import { services } from '../data/services';
 import { CONTACT_LIMITS, validateContactPayload } from '../../lib/contact.js';
+import { contactSeoKeywords } from '../data/seo';
 
 const faqs = [
   ['Can I contact Dreamspace before buying land or property?', 'Yes. Early feasibility, document review and advisory support can help you avoid planning, approval and investment surprises.'],
@@ -87,6 +88,8 @@ export default function Contact() {
         title="Contact Dreamspace | Architecture & Liaisoning Consultants in Pune"
         description="Get in touch with Dreamspace for architecture, planning approvals, liaisoning, real estate and property management services in Pune. Call, WhatsApp or email for a free consultation."
         path="/contact"
+        pageType="ContactPage"
+        keywords={contactSeoKeywords}
         jsonLd={[faqJsonLd, breadcrumbJsonLd]}
       />
       <PageHeader title={t('contact.title')} subtitle={t('contact.subtitle')} image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85" />

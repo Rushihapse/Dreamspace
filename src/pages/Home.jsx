@@ -123,7 +123,7 @@ const feasibilityFaqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   '@id': `${SITE_URL}/#feasibility-faq`,
-  dateModified: '2026-10-23',
+  dateModified: '2026-11-02',
   mainEntity: feasibilityFaqs.map(({ question, answer }) => ({
     '@type': 'Question',
     name: question,

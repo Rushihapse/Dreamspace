@@ -46,6 +46,7 @@ export default function BlogDetail() {
         description={blog.excerpt}
         path={`/blogs/${blog.slug}`}
         image={blog.image}
+        keywords={[blog.title, 'architecture blog Pune', 'planning and building permission Maharashtra', 'Dreamspace journal']}
         jsonLd={[articleJsonLd, breadcrumbJsonLd]}
       />
       <PageHeader title={blog.title} subtitle={`${formatDate(blog.date)} / Dreamspace Team / ${blog.readingTime}`} image={blog.image} />

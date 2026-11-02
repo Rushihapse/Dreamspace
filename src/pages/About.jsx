@@ -8,6 +8,7 @@ import PropertyLifecycle from '../components/PropertyLifecycle';
 import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { services } from '../data/services';
 import { company } from '../data/company';
+import { aboutSeoKeywords } from '../data/seo';
 
 const values = ['Professional Excellence', 'Transparency', 'Practical Design', 'Compliance', 'Sustainable Development'];
 const trustFacts = [
@@ -35,7 +36,15 @@ export default function About() {
         title="About Dreamspace | Architecture & Liaisoning Firm in Pune"
         description={`${company.name}, founded by ${company.founder}, is a Pune-based consultancy delivering integrated architecture, planning approvals, liaisoning and real estate solutions across PCMC, PMC and PMRDA.`}
         path="/about"
-        jsonLd={breadcrumbJsonLd}
+        pageType="AboutPage"
+        keywords={aboutSeoKeywords}
+        jsonLd={[{
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: company.founder,
+          jobTitle: company.founderTitle,
+          worksFor: { '@id': `${SITE_URL}/#organization` }
+        }, breadcrumbJsonLd]}
       />
       <PageHeader
         title={t('about.title')}
