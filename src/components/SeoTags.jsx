@@ -23,12 +23,13 @@ function upsertLink(rel, href) {
   el.setAttribute('href', href);
 }
 
-export default function SeoTags({ title, description, path = '/', image = DEFAULT_IMAGE, jsonLd, noindex = false }) {
+export default function SeoTags({ title, description, path = '/', image = DEFAULT_IMAGE, jsonLd, keywords = [], noindex = false }) {
   useEffect(() => {
     const url = `${SITE_URL}${path}`;
     document.title = title;
     upsertMeta('name', 'description', description);
-    upsertMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    upsertMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+    if (keywords.length) upsertMeta('name', 'keywords', keywords.join(', '));
     upsertLink('canonical', url);
     upsertMeta('property', 'og:type', 'website');
     upsertMeta('property', 'og:title', title);
@@ -52,7 +53,7 @@ export default function SeoTags({ title, description, path = '/', image = DEFAUL
     } else if (script) {
       script.remove();
     }
-  }, [title, description, path, image, jsonLd, noindex]);
+  }, [title, description, path, image, jsonLd, keywords, noindex]);
 
   return null;
 }

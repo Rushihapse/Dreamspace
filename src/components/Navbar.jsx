@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -19,6 +19,9 @@ export default function Navbar() {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -29,11 +32,41 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', open);
-    return () => document.body.classList.remove('menu-open');
+    if (!open) return () => document.body.classList.remove('menu-open');
+
+    closeButtonRef.current?.focus();
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        requestAnimationFrame(() => menuButtonRef.current?.focus());
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const focusable = [...menuRef.current.querySelectorAll('a[href], button:not([disabled])')];
+      const first = focusable[0];
+      const last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.classList.remove('menu-open');
+      document.removeEventListener('keydown', onKeyDown);
+    };
   }, [open]);
 
+  const closeMenu = () => {
+    setOpen(false);
+    requestAnimationFrame(() => menuButtonRef.current?.focus());
+  };
+
   const navLinkClass = ({ isActive }) =>
-    `link-underline focus-ring text-xs font-bold uppercase tracking-[0.16em] transition ${
+    `site-nav-link link-underline focus-ring font-bold uppercase tracking-[0.16em] transition ${
       isActive ? 'text-gold' : 'text-current'
     }`;
 
@@ -66,13 +99,14 @@ export default function Navbar() {
             to="/contact"
             data-cursor="Start"
             data-cursor-arrow="true"
-            className="focus-ring shrink-0 whitespace-nowrap border border-current px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:bg-gold hover:text-white"
+            className="site-header-cta focus-ring shrink-0 whitespace-nowrap border border-current px-5 py-3 font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:bg-gold hover:text-white"
           >
             {t('common.startProject')}
           </Link>
         </div>
 
         <button
+          ref={menuButtonRef}
           type="button"
           aria-label="Open mobile menu"
           aria-expanded={open}
@@ -84,10 +118,13 @@ export default function Navbar() {
         </button>
       </nav>
 
-      <AnimatePresence>
-        {open && (
+      {open && (
           <motion.div
+            ref={menuRef}
             id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
             className="fixed left-0 top-0 z-[100] h-dvh w-screen bg-[#111111] text-white xl:hidden"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
@@ -104,7 +141,7 @@ export default function Navbar() {
                     <span className="block text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-gold">Infrastructure & Liaisoning</span>
                   </span>
                 </Link>
-                <button type="button" aria-label="Close mobile menu" onClick={() => setOpen(false)} className="focus-ring grid h-11 w-11 place-items-center border border-white/30">
+                <button ref={closeButtonRef} type="button" aria-label="Close mobile menu" onClick={closeMenu} className="focus-ring grid h-11 w-11 place-items-center border border-white/30">
                   <X size={22} />
                 </button>
               </div>
@@ -114,7 +151,7 @@ export default function Navbar() {
                     key={item.to}
                     to={item.to}
                     end={item.to === '/'}
-                    onClick={() => setOpen(false)}
+                    onClick={closeMenu}
                     className={({ isActive }) => `serif-heading text-4xl leading-none ${isActive ? 'text-gold' : 'text-white'}`}
                   >
                     {t(item.label)}
@@ -126,8 +163,7 @@ export default function Navbar() {
               </div>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
+      )}
     </header>
   );
 }

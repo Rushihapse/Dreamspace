@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { lazy, Suspense } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,13 +11,16 @@ import BlogCard from '../components/BlogCard';
 import CTASection from '../components/CTASection';
 import ImageReveal from '../components/ImageReveal';
 import DigitalCityBackdrop from '../components/DigitalCityBackdrop';
-import WaveSurface from '../components/WaveSurface';
 import PropertyLifecycle from '../components/PropertyLifecycle';
+import ArchitectureMotion from '../components/ArchitectureMotion';
 import SeoTags, { SITE_URL } from '../components/SeoTags';
 import { services } from '../data/services';
 import { projects } from '../data/projects';
 import { blogs } from '../data/blogs';
 import { company } from '../data/company';
+import { feasibilityFaqs, homeSeoKeywords } from '../data/seo';
+
+const FeasibilitySuite = lazy(() => import('../components/FeasibilitySuite'));
 
 const localBusinessJsonLd = {
   '@context': 'https://schema.org',
@@ -28,6 +32,13 @@ const localBusinessJsonLd = {
   logo: `${SITE_URL}/logo.png`,
   image: `${SITE_URL}/logo.png`,
   telephone: company.phones[0],
+  contactPoint: company.phones.map((phone) => ({
+    '@type': 'ContactPoint',
+    telephone: phone,
+    contactType: 'customer service',
+    areaServed: 'IN',
+    availableLanguage: ['English', 'Marathi', 'Hindi']
+  })),
   email: company.email,
   address: {
     '@type': 'PostalAddress',
@@ -53,6 +64,14 @@ const localBusinessJsonLd = {
   ],
   sameAs: [company.instagramUrl],
   description: company.mission,
+  knowsAbout: [
+    'Architecture and building design',
+    'Unified Development Control and Promotion Regulations (UDCPR)',
+    'Building permissions and development approvals',
+    'Residential, commercial and industrial project feasibility',
+    'PMC, PCMC, PMRDA and MIDC approval coordination',
+    'Commencement and occupancy certification'
+  ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Dreamspace Services',
@@ -67,6 +86,49 @@ const localBusinessJsonLd = {
       }
     }))
   }
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: company.name,
+  inLanguage: 'en-IN',
+  publisher: { '@id': `${SITE_URL}/#organization` }
+};
+
+const feasibilityApplicationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': `${SITE_URL}/#feasibility-engine`,
+  name: 'Dreamspace Feasibility Engine',
+  url: `${SITE_URL}/#feasibility-engine`,
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Any',
+  isAccessibleForFree: true,
+  description:
+    'A preliminary planning tool for residential, commercial and industrial feasibility, UDCPR checks, building-permission documents and sanction readiness in Maharashtra.',
+  featureList: [
+    'Residential and commercial UDCPR feasibility checks',
+    'Industrial and MIDC approval readiness',
+    'Building sanction document checklist',
+    'FSI, setback, height, parking and open-space review'
+  ],
+  provider: { '@id': `${SITE_URL}/#organization` },
+  areaServed: { '@type': 'AdministrativeArea', name: 'Maharashtra' }
+};
+
+const feasibilityFaqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${SITE_URL}/#feasibility-faq`,
+  dateModified: '2026-10-23',
+  mainEntity: feasibilityFaqs.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer }
+  }))
 };
 
 const engagementSteps = ['Understand Requirement', 'Site & Document Study', 'Concept & Planning', 'Approval Support', 'Execution Guidance'];
@@ -87,7 +149,8 @@ export default function Home() {
         title="Architecture, Planning & Liaisoning Consultants in Pune | Dreamspace"
         description="Dreamspace Infrastructure & Liaisoning Pvt Ltd offers architecture, planning approvals, liaisoning, real estate consultancy and property management services in Pune, PCMC, PMC, PMRDA & MIDC. Book a free consultation."
         path="/"
-        jsonLd={localBusinessJsonLd}
+        keywords={homeSeoKeywords}
+        jsonLd={[localBusinessJsonLd, websiteJsonLd, feasibilityApplicationJsonLd, feasibilityFaqJsonLd]}
       />
       <Hero />
 
@@ -162,7 +225,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-dark py-16 text-white sm:py-24">
+      <section id="feasibility-engine" className="bg-dark py-16 text-white sm:py-24">
         <div className="container-page grid gap-10">
           <motion.div
             className="grid gap-6 lg:grid-cols-[0.78fr_1fr] lg:items-end"
@@ -181,7 +244,37 @@ export default function Home() {
               Test road width, setbacks, floor count, open space and orientation to understand the early logic behind a buildable project.
             </p>
           </motion.div>
-          <WaveSurface />
+          <Suspense fallback={<div className="min-h-[480px] animate-pulse border border-dark/10 bg-dark/5" aria-label="Loading feasibility tools" />}>
+            <FeasibilitySuite />
+          </Suspense>
+        </div>
+      </section>
+
+      <section className="border-b border-dark/10 bg-[#f4f1eb] py-16 sm:py-24" aria-labelledby="feasibility-guidance-title">
+        <div className="container-page grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <div className="lg:sticky lg:top-28">
+            <p className="eyebrow">Planning Answers</p>
+            <h2 id="feasibility-guidance-title" className="serif-heading mt-4 text-4xl font-semibold leading-tight sm:text-5xl">
+              Building feasibility and permission guidance for Pune and Maharashtra.
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-8 text-muted">
+              Clear starting points for residential, commercial and industrial projects before drawings move into an authority submission.
+            </p>
+            <Link to="/services/planning-regulatory-approvals" className="link-underline mt-7 w-fit text-xs font-bold uppercase tracking-[0.16em]">
+              Explore approval support <ArrowUpRight size={16} />
+            </Link>
+          </div>
+          <div className="grid gap-3">
+            {feasibilityFaqs.map(({ question, answer }) => (
+              <details key={question} className="group border border-dark/12 bg-white p-6 open:border-gold/50">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-5 text-left font-semibold leading-7 marker:hidden">
+                  <span>{question}</span>
+                  <span className="mt-1 text-gold transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p className="mt-4 max-w-3xl border-t border-dark/10 pt-4 text-sm leading-7 text-muted">{answer}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -219,8 +312,8 @@ export default function Home() {
       <section className="bg-dark py-16 text-white sm:py-24">
         <div className="container-page grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <ImageReveal
-            src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=85"
-            alt="Premium architecture studio interior and planning environment"
+            src="https://images.pexels.com/photos/36809500/pexels-photo-36809500.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Contemporary architecture studio with drawings, material studies and design models"
             className="aspect-[16/11]"
           />
           <motion.div
@@ -239,6 +332,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      <ArchitectureMotion />
 
       <ProjectShowcase projects={projects} />
 
@@ -281,8 +376,8 @@ export default function Home() {
             </div>
           </div>
           <ImageReveal
-            src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80"
-            alt="Architectural geometry and warm building facade"
+            src="https://images.pexels.com/photos/40494848/pexels-photo-40494848.jpeg?auto=compress&cs=tinysrgb&w=1400"
+            alt="Contemporary architecture integrated with mature landscape and greenery"
             className="aspect-[4/5]"
           />
         </div>

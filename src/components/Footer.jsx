@@ -17,7 +17,7 @@ export default function Footer() {
     <footer className="bg-dark py-14 text-white sm:py-20">
       <div className="container-page grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
-          <img src="/logo.png" alt={company.shortName} className="h-20 w-auto" />
+          <img src="/logo.png" alt={company.shortName} loading="lazy" decoding="async" className="h-20 w-auto" />
           <p className="serif-heading mt-4 text-2xl text-white">{company.slogan}</p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-gold">{company.name}</p>
           <p className="mt-4 max-w-md text-sm leading-7 text-white/65">{t('footer.text')}</p>
@@ -72,9 +72,15 @@ export default function Footer() {
         <p className="mt-2 text-xs normal-case tracking-[0.02em] text-white/40">
           <span className="font-bold uppercase tracking-[0.14em] text-white/55">CIN:</span> {company.cin}
         </p>
-        <div className="mt-3 flex flex-col gap-3 text-xs uppercase tracking-[0.14em] text-white/45 sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; 2026 {company.name}</p>
-          <p>{company.tagline}</p>
+        <div className="mt-4 border-t border-white/8 pt-5 text-xs text-white/45">
+          <div className="flex flex-col items-center gap-3 text-center uppercase tracking-[0.14em] sm:flex-row sm:justify-between sm:text-left">
+            <p>&copy; 2026 {company.name}</p>
+            <p className="sm:text-right">{company.tagline}</p>
+          </div>
+          <p className="mt-5 border-t border-white/8 pt-4 text-center normal-case tracking-[0.04em] text-white/48">
+            Website developed &amp; maintained by{' '}
+            <span className="font-bold uppercase tracking-[0.12em] text-white/72">REDCYBERFOX LLP</span>
+          </p>
         </div>
       </div>
     </footer>

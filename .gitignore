@@ -8,3 +8,7 @@ dist
 .git-index.lock
 .gitdb
 .git
+.claude/
+audit/
+*-preview.png
+dreamspace-vercel-production-*.zip

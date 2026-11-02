@@ -8,8 +8,8 @@ const variants = {
 
 export default function PageTransition({ children }) {
   return (
-    <motion.main variants={variants} initial="initial" animate="animate" exit="exit">
+    <motion.div variants={variants} initial="initial" animate="animate" exit="exit">
       {children}
-    </motion.main>
+    </motion.div>
   );
 }

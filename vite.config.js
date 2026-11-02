@@ -1,13 +1,9 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
+import { CONTACT_LIMITS, sendContactEmail, validateContactPayload } from './lib/contact.js';
+import { services } from './src/data/services.js';
 
-const escapeHtml = (value = '') =>
-  String(value)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
+const allowedServices = services.map((service) => service.title.en);
 
 const readJsonBody = (request) =>
   new Promise((resolve, reject) => {
@@ -15,6 +11,10 @@ const readJsonBody = (request) =>
 
     request.on('data', (chunk) => {
       body += chunk;
+      if (Buffer.byteLength(body) > CONTACT_LIMITS.bodyBytes) {
+        reject(Object.assign(new Error('Request body too large.'), { statusCode: 413 }));
+        request.destroy();
+      }
     });
 
     request.on('end', () => {
@@ -32,18 +32,6 @@ const sendJson = (response, status, payload) => {
   response.end(JSON.stringify(payload));
 };
 
-const buildEmailHtml = (data) => `
-  <div style="font-family:Arial,sans-serif;color:#111;line-height:1.6">
-    <h2 style="margin:0 0 16px">New Dreamspace enquiry</h2>
-    <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
-    <p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
-    <p><strong>Email:</strong> ${escapeHtml(data.email || 'Not provided')}</p>
-    <p><strong>Service:</strong> ${escapeHtml(data.service)}</p>
-    <p><strong>Message:</strong></p>
-    <p>${escapeHtml(data.message || 'No message provided').replaceAll('\n', '<br>')}</p>
-  </div>
-`;
-
 const contactApiPlugin = (env) => ({
   name: 'dreamspace-contact-api',
   configureServer(server) {
@@ -54,51 +42,22 @@ const contactApiPlugin = (env) => ({
       }
 
       try {
-        const apiKey = env.RESEND_API_KEY;
-        const to = env.CONTACT_TO_EMAIL || 'office@dreamspaceinfra.com';
-        const from = env.CONTACT_FROM_EMAIL || 'Dreamspace <onboarding@resend.dev>';
         const data = await readJsonBody(request);
+        const validation = validateContactPayload(data, allowedServices);
+        if (validation.spam) return sendJson(response, 200, { ok: true });
+        if (validation.error) return sendJson(response, 400, { error: validation.error });
+        if (!env.RESEND_API_KEY) return sendJson(response, 503, { error: 'Email service is temporarily unavailable.' });
 
-        if (!apiKey) {
-          sendJson(response, 500, { error: 'Email service is not configured.' });
-          return;
-        }
-
-        if (!data.name || !data.phone) {
-          sendJson(response, 400, { error: 'Name and phone are required.' });
-          return;
-        }
-
-        if (data.website) {
-          sendJson(response, 200, { ok: true });
-          return;
-        }
-
-        const resendResponse = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'User-Agent': 'dreamspace-website',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            from,
-            to,
-            subject: `New Dreamspace enquiry from ${data.name}`,
-            reply_to: data.email || undefined,
-            html: buildEmailHtml(data)
-          })
+        const result = await sendContactEmail({
+          apiKey: env.RESEND_API_KEY,
+          to: env.CONTACT_TO_EMAIL || 'office@dreamspaceinfra.com',
+          from: env.CONTACT_FROM_EMAIL || 'Dreamspace <onboarding@resend.dev>',
+          data: validation.data
         });
-
-        if (!resendResponse.ok) {
-          sendJson(response, 502, { error: 'Unable to send enquiry right now.' });
-          return;
-        }
-
-        const result = await resendResponse.json();
         sendJson(response, 200, { ok: true, id: result.id });
       } catch (error) {
-        sendJson(response, 500, { error: 'Unable to process enquiry.' });
+        console.error('Contact enquiry failed:', error instanceof Error ? error.message : error);
+        sendJson(response, error?.statusCode || 502, { error: 'Unable to send enquiry right now. Please call or WhatsApp Dreamspace.' });
       }
     });
   }
@@ -108,6 +67,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
-    plugins: [react(), contactApiPlugin(env)]
+    plugins: [react(), contactApiPlugin(env)],
+    server: { host: '127.0.0.1' }
   };
 });

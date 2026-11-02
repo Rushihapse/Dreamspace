@@ -6,6 +6,7 @@ import SeoTags, { SITE_URL } from '../components/SeoTags';
 import ThankYouModal from '../components/ThankYouModal';
 import { company } from '../data/company';
 import { services } from '../data/services';
+import { CONTACT_LIMITS, validateContactPayload } from '../../lib/contact.js';
 
 const faqs = [
   ['Can I contact Dreamspace before buying land or property?', 'Yes. Early feasibility, document review and advisory support can help you avoid planning, approval and investment surprises.'],
@@ -44,6 +45,13 @@ export default function Contact() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
+    const validation = validateContactPayload(payload, services.map((service) => service.title.en));
+
+    if (validation.error) {
+      setStatus('error');
+      setMessage(validation.error);
+      return;
+    }
 
     setStatus('sending');
     setMessage('');
@@ -57,10 +65,10 @@ export default function Contact() {
         body: JSON.stringify(payload)
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(result.error || 'Unable to send enquiry.');
+        throw new Error(result.error || 'Unable to send enquiry right now. Please call or WhatsApp Dreamspace.');
       }
 
       setStatus('success');
@@ -89,13 +97,13 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="mt-8 grid gap-5">
               <input type="text" name="website" tabIndex="-1" autoComplete="off" className="hidden" aria-hidden="true" />
               <div className="grid min-w-0 gap-5 sm:grid-cols-2">
-                <Field label="Name" name="name" required />
-                <Field label="Phone" name="phone" type="tel" required />
+                <Field label="Name" name="name" required autoComplete="name" minLength={2} maxLength={CONTACT_LIMITS.name} />
+                <Field label="Phone" name="phone" type="tel" required autoComplete="tel" inputMode="tel" pattern="[+()0-9][+()0-9 .-]{6,23}" maxLength={CONTACT_LIMITS.phone} />
               </div>
-              <Field label="Email" name="email" type="email" />
+              <Field label="Email" name="email" type="email" autoComplete="email" maxLength={CONTACT_LIMITS.email} />
               <label className="grid min-w-0 gap-2 text-sm font-semibold">
                 Service Interest
-                <select name="service" className="focus-ring w-full min-w-0 border border-dark/15 bg-bg px-4 py-4 text-sm">
+                <select name="service" required className="focus-ring w-full min-w-0 border border-dark/15 bg-bg px-4 py-4 text-sm">
                   {services.map((service) => (
                     <option key={service.slug} value={service.title.en}>{service.title.en}</option>
                   ))}
@@ -103,7 +111,7 @@ export default function Contact() {
               </label>
               <label className="grid min-w-0 gap-2 text-sm font-semibold">
                 Message
-                <textarea name="message" rows="6" className="focus-ring w-full min-w-0 resize-none border border-dark/15 bg-bg px-4 py-4 text-sm" placeholder="Tell us about the land, property, approval, design or management requirement." />
+                <textarea name="message" rows="6" maxLength={CONTACT_LIMITS.message} className="focus-ring w-full min-w-0 resize-none border border-dark/15 bg-bg px-4 py-4 text-sm" placeholder="Tell us about the land, property, approval, design or management requirement." />
               </label>
               <button
                 type="submit"
@@ -120,7 +128,17 @@ export default function Contact() {
             </form>
           </div>
           <div className="grid min-w-0 gap-5">
-            <Info icon={<Phone size={20} />} label="Phone" value={company.phones.join(' | ')} />
+            <div className="flex min-w-0 gap-4 border border-dark/12 bg-white p-6">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold/15 text-gold"><Phone size={20} /></span>
+              <div className="min-w-0">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Phone</p>
+                <div className="mt-2 flex flex-wrap gap-x-3 gap-y-2 font-semibold">
+                  {company.phones.map((phone) => (
+                    <a key={phone} href={`tel:${phone.replace(/\s/g, '')}`} className="link-underline">{phone}</a>
+                  ))}
+                </div>
+              </div>
+            </div>
             <Info icon={<Mail size={20} />} label="Email" value={company.email} href={`mailto:${company.email}`} />
             <Info icon={<MapPin size={20} />} label="Address" value={company.address} />
             <Info icon={<Building2 size={20} />} label="Registered Office" value={company.registeredOffice} />
@@ -161,11 +179,11 @@ export default function Contact() {
   );
 }
 
-function Field({ label, name, type = 'text', required = false }) {
+function Field({ label, name, type = 'text', required = false, ...inputProps }) {
   return (
     <label className="grid min-w-0 gap-2 text-sm font-semibold">
       {label}
-      <input name={name} type={type} required={required} className="focus-ring w-full min-w-0 border border-dark/15 bg-bg px-4 py-4 text-sm" />
+      <input name={name} type={type} required={required} {...inputProps} className="focus-ring w-full min-w-0 border border-dark/15 bg-bg px-4 py-4 text-sm" />
     </label>
   );
 }

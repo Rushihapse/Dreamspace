@@ -30,7 +30,7 @@ export default function Projects() {
         path="/projects"
         jsonLd={breadcrumbJsonLd}
       />
-      <PageHeader title={t('projects.title')} subtitle={t('projects.subtitle')} image="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1800&q=85" />
+      <PageHeader title={t('projects.title')} subtitle={t('projects.subtitle')} image="https://images.pexels.com/photos/36297579/pexels-photo-36297579.jpeg?auto=compress&cs=tinysrgb&w=2200" />
       <section className="py-16 sm:py-24">
         <div className="container-page">
           <div className="mb-10 flex gap-3 overflow-x-auto pb-2 sm:flex-wrap">

@@ -27,7 +27,7 @@ export default function DigitalCityBackdrop({ density = 'hero', showImage = true
     <div className="absolute inset-0 overflow-hidden bg-dark" aria-hidden="true">
       {showImage && (
         <motion.img
-          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2200&q=85"
+          src="https://images.pexels.com/photos/36470791/pexels-photo-36470791.jpeg?auto=compress&cs=tinysrgb&w=2200"
           alt=""
           className="absolute inset-0 h-full w-full object-cover opacity-30"
           initial={{ scale: 1.08 }}

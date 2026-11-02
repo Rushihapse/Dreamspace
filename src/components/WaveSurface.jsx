@@ -48,7 +48,7 @@ export default function WaveSurface() {
   const [setback, setSetback] = useState(3);
   const [floors, setFloors] = useState(projectTypes.residential.floors);
   const [green, setGreen] = useState(24);
-  const [orientation, setOrientation] = useState(34);
+  const [orientation, setOrientation] = useState(33);
 
   const activeType = projectTypes[type];
   const activeJurisdiction = jurisdictions[jurisdiction];
@@ -71,7 +71,8 @@ export default function WaveSurface() {
     const footprintRatio = clamp(72 - setbackLoss - green * 0.42, 22, 64);
     const footprint = Math.round(plot * (footprintRatio / 100));
     const builtUp = Math.round(Math.min(plot * fsi, footprint * floors));
-    const daylight = clamp(Math.round(96 - floors * 7 + green * 0.72 + setback * 2.2), 42, 96);
+    const orientationQuality = (Math.cos(((orientation - 90) * Math.PI) / 180) + 1) / 2;
+    const daylight = clamp(Math.round(82 - floors * 7 + green * 0.72 + setback * 2.2 + orientationQuality * 14), 42, 96);
     const approval = clamp(Math.round(road * 4 + setback * 6 + green * 0.9 + daylight * 0.22), 38, 98);
     const balance = clamp(Math.round(approval * 0.48 + daylight * 0.28 + (100 - Math.abs(42 - footprintRatio)) * 0.24), 35, 98);
     const utilisation = Math.round((builtUp / Math.max(plot * fsi, 1)) * 100);
@@ -87,7 +88,7 @@ export default function WaveSurface() {
       utilisation,
       greenArea: Math.round(plot * (green / 100))
     };
-  }, [activeJurisdiction, floors, green, plot, premiumFsi, road, setback]);
+  }, [activeJurisdiction, floors, green, orientation, plot, premiumFsi, road, setback]);
 
   const report = useMemo(() => {
     const suggestions = [];
@@ -201,7 +202,7 @@ export default function WaveSurface() {
           <div className="mt-4 grid grid-cols-3 gap-2">
             <Metric label="FSI" value={metrics.fsi} />
             <Metric label="Built-up" value={`${metrics.builtUp}`} suffix="sqm" />
-            <Metric label="Ready" value={`${metrics.approval}%`} />
+            <Metric label="Concept score" value={`${metrics.approval}%`} />
           </div>
         </section>
 
@@ -291,7 +292,7 @@ export default function WaveSurface() {
       </div>
 
       <p className="relative border-t border-white/10 px-4 py-3 text-[0.66rem] leading-5 text-white/35 sm:px-5">
-        Indicative planning reference based on Maharashtra&apos;s UDCPR/DCPR framework for {activeJurisdiction.fullLabel} - not an official FSI or sanction calculation. Always confirm current norms with the relevant authority and a licensed architect before finalising design.
+        Illustrative concept explorer for early conversations. Results are simplified estimates, not an official FSI, daylight, feasibility or sanction calculation. Always confirm current rules for {activeJurisdiction.fullLabel} with the relevant authority and a licensed architect before making design or investment decisions.
       </p>
     </div>
   );

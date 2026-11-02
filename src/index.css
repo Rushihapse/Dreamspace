@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 :root {
   --bg: #f6f1e8;
@@ -16,6 +15,7 @@
 }
 
 html {
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -28,7 +28,7 @@ body {
   overflow-x: hidden;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
   body,
   a,
   button,
@@ -77,6 +77,30 @@ select {
 
 .serif-heading {
   font-family: "Playfair Display", Georgia, serif;
+}
+
+.engine-kicker,
+.engine-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.engine-small { font-size: 0.72rem; }
+.engine-tab { padding: 0.8rem 0.65rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; transition: 180ms ease; }
+.engine-field { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.025); padding: 0.85rem; }
+
+.site-nav-link,
+.site-header-cta {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.language-option {
+  font-size: 0.68rem;
+  line-height: 1.5;
 }
 
 .link-underline {
@@ -560,5 +584,20 @@ select {
 @media (max-width: 420px) {
   .container-page {
     width: min(100% - 24px, 1180px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

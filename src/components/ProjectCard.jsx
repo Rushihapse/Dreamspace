@@ -13,6 +13,7 @@ export default function ProjectCard({ project, large = false }) {
         <img
           src={project.image}
           alt={project.title}
+          loading="lazy"
           decoding="async"
           className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
         />

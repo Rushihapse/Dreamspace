@@ -5,21 +5,36 @@ import { createPortal } from 'react-dom';
 
 export default function ThankYouModal({ open, onClose, title, message }) {
   const closeRef = useRef(null);
+  const dialogRef = useRef(null);
+  const previousFocusRef = useRef(null);
 
   useEffect(() => {
     if (!open) return undefined;
 
+    previousFocusRef.current = document.activeElement;
     document.body.classList.add('menu-open');
     closeRef.current?.focus();
 
     const onKeyDown = (event) => {
       if (event.key === 'Escape') onClose();
+      if (event.key !== 'Tab') return;
+      const focusable = [...dialogRef.current.querySelectorAll('button:not([disabled]), a[href]')];
+      const first = focusable[0];
+      const last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     };
     document.addEventListener('keydown', onKeyDown);
 
     return () => {
       document.body.classList.remove('menu-open');
       document.removeEventListener('keydown', onKeyDown);
+      previousFocusRef.current?.focus?.();
     };
   }, [open, onClose]);
 
@@ -36,6 +51,7 @@ export default function ThankYouModal({ open, onClose, title, message }) {
           role="presentation"
         >
           <motion.div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="thank-you-title"
