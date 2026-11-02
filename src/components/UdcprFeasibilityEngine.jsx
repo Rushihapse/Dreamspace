@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, BookOpen, CheckCircle2, ClipboardCheck, TriangleAlert } from 'lucide-react';
+import { ArrowUpRight, BookOpen, CheckCircle2, ClipboardCheck, FileSearch, Gauge, MapPinned, TriangleAlert } from 'lucide-react';
 import { AUTHORITIES, OCCUPANCIES, calculateUdcpr } from '../lib/udcprFeasibility';
 
 const makeInitialInput = (preset) => ({
@@ -14,6 +14,15 @@ export default function UdcprFeasibilityEngine({ preset = 'residential' }) {
   const [input, setInput] = useState(() => makeInitialInput(preset));
   const [activeTab, setActiveTab] = useState('site');
   const result = useMemo(() => calculateUdcpr(input), [input]);
+  const capacity = useMemo(() => {
+    const permissible = Math.max(result.fsi.permissibleBuiltUp, 1);
+    const balance = result.fsi.permissibleBuiltUp - input.proposedBuiltUp;
+    return {
+      percentage: Math.round((input.proposedBuiltUp / permissible) * 1000) / 10,
+      balance,
+      displayPercentage: Math.min(100, Math.max(0, (input.proposedBuiltUp / permissible) * 100))
+    };
+  }, [input.proposedBuiltUp, result.fsi.permissibleBuiltUp]);
   const set = (name, value) => setInput((current) => ({ ...current, [name]: value }));
 
   return (
@@ -85,6 +94,29 @@ export default function UdcprFeasibilityEngine({ preset = 'residential' }) {
             <Metric label="FSI built-up" value={result.fsi.permissibleBuiltUp} suffix="sq.m." />
             <Metric label="Open space" value={result.recreationalOpenSpace || 'N/A'} suffix={result.recreationalOpenSpace ? 'sq.m.' : ''} />
           </div>
+
+          <div className="mt-6 border border-white/10 bg-white/[0.025] p-5 sm:p-6">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="engine-kicker text-gold">Proposal snapshot</p>
+                <h4 className="serif-heading mt-2 text-2xl">How the current scheme uses its FSI potential.</h4>
+              </div>
+              <p className={`serif-heading text-3xl ${capacity.percentage > 100 ? 'text-red-300' : 'text-white'}`}>{capacity.percentage}%</p>
+            </div>
+            <div className="mt-5 h-2 overflow-hidden bg-white/10" aria-label={`${capacity.percentage}% of permissible built-up area proposed`}>
+              <div className={`h-full transition-all duration-300 ${capacity.percentage > 100 ? 'bg-red-400' : 'bg-gold'}`} style={{ width: `${capacity.displayPercentage}%` }} />
+            </div>
+            <div className="mt-3 flex flex-wrap justify-between gap-2 text-xs leading-5 text-white/45">
+              <span>{input.proposedBuiltUp.toLocaleString('en-IN')} sq.m. proposed</span>
+              <span>{result.fsi.permissibleBuiltUp.toLocaleString('en-IN')} sq.m. preliminary potential</span>
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              <SnapshotItem icon={Gauge} label={capacity.balance >= 0 ? 'Capacity balance' : 'Indicative reduction'} value={`${Math.abs(Math.round(capacity.balance)).toLocaleString('en-IN')} sq.m.`} />
+              <SnapshotItem icon={MapPinned} label="Road-width band" value={result.fsi.band} />
+              <SnapshotItem icon={FileSearch} label="Next verification" value="Title, zoning & NOCs" />
+            </div>
+            <p className="mt-5 border-t border-white/10 pt-4 text-xs leading-6 text-white/45">Use this snapshot to compare the proposed built-up area with the selected FSI. Premium FSI, TDR, deductions and authority-specific conditions must be confirmed before design freeze.</p>
+          </div>
         </section>
 
         <section className="p-4 sm:p-6 lg:p-8">
@@ -116,6 +148,8 @@ function RuleCheck({ check }) {
 }
 
 function Metric({ label, value, suffix, alert = false }) { return <div className={`border p-3 ${alert ? 'border-red-400/40 bg-red-400/10' : 'border-white/10 bg-white/[0.035]'}`}><p className="engine-label text-white/40">{label}</p><p className="serif-heading mt-1 text-xl">{value}{suffix && <span className="ml-1 text-xs text-white/45">{suffix}</span>}</p></div>; }
+
+function SnapshotItem({ icon: Icon, label, value }) { return <div className="border border-white/10 bg-black/20 p-3"><Icon className="text-gold" size={17} /><p className="engine-label mt-3 text-white/35">{label}</p><p className="mt-1 text-sm font-semibold leading-5 text-white/75">{value}</p></div>; }
 
 function NumberField({ label, value, suffix, min, step = 1, onChange }) { return <label className="engine-field"><span className="engine-label text-white/50">{label}</span><span className="mt-2 flex items-center border border-white/15 bg-black/20 focus-within:border-gold"><input className="min-w-0 flex-1 bg-transparent px-3 py-3 text-white outline-none" type="number" value={value} min={min} step={step} onChange={(event) => onChange(Number(event.target.value))} />{suffix && <span className="pr-3 text-xs text-white/35">{suffix}</span>}</span></label>; }
 
