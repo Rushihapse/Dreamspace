@@ -7,6 +7,7 @@ export const company = {
   founderTitle: 'Founder & Principal Consultant',
   phones: ['+91 96658 47993', '+91 98228 52156'],
   whatsapp: '919665847993',
+  whatsappUrl: 'https://wa.me/919665847993?text=Hello%20DREAMSPACE,%20I%20am%20interested%20in%20your%20services:%0A%0A%E2%80%A2%20Architecture%20%26%20Planning%0A%E2%80%A2%20Approvals%20%26%20Liaisoning%0A%E2%80%A2%20MIDC%20%26%20Compliance%20NOCs%0A%E2%80%A2%20Real%20Estate%20%26%20Advisory%0A%E2%80%A2%20Land%20Development%0A%E2%80%A2%20Property%20Management%0A%0ARequirement%20/%20Location:%20',
   email: 'office@dreamspaceinfra.com',
   instagram: 'the_dreamspace_',
   instagramUrl: 'https://www.instagram.com/the_dreamspace_/',

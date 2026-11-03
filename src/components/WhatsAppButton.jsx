@@ -4,7 +4,7 @@ import { company } from '../data/company';
 export default function WhatsAppButton() {
   return (
     <a
-      href={`https://wa.me/${company.whatsapp}?text=Hello%20Dreamspace%2C%20I%20want%20to%20discuss%20a%20project.`}
+      href={company.whatsappUrl}
       target="_blank"
       rel="noreferrer"
       aria-label="Chat with Dreamspace on WhatsApp"

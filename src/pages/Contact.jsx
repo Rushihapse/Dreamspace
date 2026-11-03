@@ -145,7 +145,7 @@ export default function Contact() {
             <Info icon={<Mail size={20} />} label="Email" value={company.email} href={`mailto:${company.email}`} />
             <Info icon={<MapPin size={20} />} label="Address" value={company.address} />
             <Info icon={<Building2 size={20} />} label="Registered Office" value={company.registeredOffice} />
-            <a href={`https://wa.me/${company.whatsapp}`} target="_blank" rel="noreferrer" className="flex min-w-0 items-center gap-4 bg-gold p-6 text-white transition hover:bg-dark">
+            <a href={company.whatsappUrl} target="_blank" rel="noreferrer" className="flex min-w-0 items-center gap-4 bg-gold p-6 text-white transition hover:bg-dark">
               <MessageCircle size={24} className="shrink-0" />
               <span className="font-bold uppercase tracking-[0.14em]">WhatsApp Dreamspace</span>
             </a>
