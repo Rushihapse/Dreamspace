@@ -99,40 +99,16 @@ export default function About() {
           ))}
         </div>
       </section>
-      <section className="bg-white py-16 sm:py-24">
-        <div className="container-page grid gap-10 lg:grid-cols-[0.75fr_1fr] lg:items-end">
-          <div>
-            <p className="eyebrow">Founder</p>
-            <h2 className="serif-heading mt-3 text-5xl font-semibold">{company.founder}</h2>
-            <p className="mt-2 text-sm font-bold uppercase tracking-[0.16em] text-gold">{company.founderTitle}</p>
-          </div>
-          <p className="text-lg leading-9 text-muted">
-            {company.founder} leads {company.name} with professional expertise spanning architecture, planning processes, liaisoning and property advisory, built through direct, client-focused coordination rather than layered handoffs. The approach favors transparency over shortcuts: clients see the real status of approvals, documentation and site decisions at every stage. That discipline extends to sustainability — designs and land-use recommendations are weighed for long-term durability, not just immediate approval, so the outcome holds value well beyond handover.
-          </p>
-        </div>
-      </section>
       <section className="border-y border-dark/10 bg-bg py-16 sm:py-24">
         <div className="container-page">
-          <div className="grid gap-10 lg:grid-cols-[0.75fr_1fr] lg:items-start">
-            <div>
-              <p className="eyebrow">Co-founder</p>
-              <h2 className="serif-heading mt-3 text-5xl font-semibold">{company.coFounder.name}</h2>
-              <p className="mt-2 text-sm font-bold uppercase tracking-[0.16em] text-gold">{company.coFounder.title}</p>
-              <p className="mt-6 max-w-xl text-base leading-8 text-muted">{company.coFounder.introduction}</p>
-            </div>
-            <div>
-              <p className="eyebrow">Technical Leadership</p>
-              <h3 className="serif-heading mt-3 text-3xl font-semibold">Building the digital systems behind efficient delivery.</h3>
-              <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                {company.coFounder.responsibilities.map((responsibility, index) => (
-                  <div key={responsibility} className="flex gap-4 border border-dark/12 bg-white p-5">
-                    <span className="serif-heading text-xl text-gold">{String(index + 1).padStart(2, '0')}</span>
-                    <p className="text-sm leading-7 text-muted">{responsibility}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-6 border-l-2 border-gold pl-5 text-base leading-8 text-dark/75">{company.coFounder.focus}</p>
-            </div>
+          <div className="mb-10 max-w-3xl sm:mb-14">
+            <p className="eyebrow">Leadership</p>
+            <h2 className="serif-heading mt-3 text-4xl font-semibold sm:text-5xl">Two disciplines. One integrated direction.</h2>
+            <p className="mt-4 text-base leading-8 text-muted">Dreamspace combines built-environment expertise with technical leadership to deliver clear, coordinated and future-ready project support.</p>
+          </div>
+          <div className="grid gap-6 sm:gap-8">
+            <LeadershipProfile label="Founder" profile={company.founderProfile} />
+            <LeadershipProfile label="Co-founder" profile={company.coFounder} />
           </div>
         </div>
       </section>
@@ -152,5 +128,33 @@ export default function About() {
       </section>
       <CTASection />
     </>
+  );
+}
+
+function LeadershipProfile({ label, profile }) {
+  return (
+    <article className="border border-dark/12 bg-white p-6 shadow-[0_16px_50px_rgba(17,17,17,0.05)] sm:p-8 lg:p-10">
+      <div className="grid gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
+        <div className="lg:border-r lg:border-dark/10 lg:pr-10">
+          <p className="eyebrow">{label}</p>
+          <h3 className="serif-heading mt-3 text-4xl font-semibold sm:text-5xl">{profile.name}</h3>
+          <p className="mt-2 text-sm font-bold uppercase leading-6 tracking-[0.16em] text-gold">{profile.title}</p>
+          <p className="mt-6 text-base leading-8 text-muted">{profile.introduction}</p>
+        </div>
+        <div>
+          <p className="eyebrow">Leadership Focus</p>
+          <h4 className="serif-heading mt-3 text-3xl font-semibold">{profile.heading}</h4>
+          <div className="mt-7 grid gap-3 sm:grid-cols-2">
+            {profile.responsibilities.map((responsibility, index) => (
+              <div key={responsibility} className="flex min-h-28 gap-4 border border-dark/12 bg-bg p-5">
+                <span className="serif-heading shrink-0 text-xl text-gold">{String(index + 1).padStart(2, '0')}</span>
+                <p className="text-sm leading-7 text-muted">{responsibility}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 border-l-2 border-gold pl-5 text-base leading-8 text-dark/75">{profile.focus}</p>
+        </div>
+      </div>
+    </article>
   );
 }

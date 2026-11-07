@@ -5,11 +5,29 @@ export const company = {
   slogan: 'From Land To Landmark',
   founder: 'Ashitosh D. Chougule',
   founderTitle: 'Founder & Principal Consultant',
+  founderProfile: {
+    name: 'Ashitosh D. Chougule',
+    title: 'Founder & Principal Consultant',
+    introduction:
+      'Ashitosh leads Dreamspace’s architecture, planning, liaisoning and property advisory practice through direct, client-focused coordination and disciplined project leadership.',
+    heading: 'Guiding projects from land potential to responsible delivery.',
+    responsibilities: [
+      'Directing architectural planning, design development and project strategy.',
+      'Guiding regulatory approvals, liaisoning and authority coordination.',
+      'Reviewing land potential, development feasibility and property opportunities.',
+      'Maintaining transparent communication across documentation and site decisions.',
+      'Coordinating consultants and stakeholders through each project stage.',
+      'Promoting practical, compliant and sustainable long-term outcomes.'
+    ],
+    focus:
+      'His approach combines professional clarity, regulatory understanding and practical design judgment so every recommendation supports lasting project and property value.'
+  },
   coFounder: {
     name: 'Rushikesh A. Hapse',
     title: 'Co-founder & Technical Director',
     introduction:
       'Rushikesh leads Dreamspace’s technical operations and digital infrastructure, bringing technology, IT management and process design together to build reliable systems that support the company’s day-to-day work and long-term growth.',
+    heading: 'Building the digital systems behind efficient delivery.',
     responsibilities: [
       'Overseeing IT infrastructure, system reliability and day-to-day technical operations.',
       'Directing website development, maintenance and the company’s digital platforms.',
