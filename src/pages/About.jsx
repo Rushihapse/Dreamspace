@@ -14,7 +14,7 @@ const values = ['Professional Excellence', 'Transparency', 'Practical Design', '
 const trustFacts = [
   { value: String(services.length), label: 'Integrated Service Divisions' },
   { value: String(company.authorities.length), label: 'Approval Authorities Covered' },
-  { value: '01', label: 'Founder-led Studio' },
+  { value: '02', label: 'Leadership Principals' },
   { value: company.region, label: 'Regional Focus' }
 ];
 
@@ -34,17 +34,27 @@ export default function About() {
     <>
       <SeoTags
         title="About Dreamspace | Architecture & Liaisoning Firm in Pune"
-        description={`${company.name}, founded by ${company.founder}, is a Pune-based consultancy delivering integrated architecture, planning approvals, liaisoning and real estate solutions across PCMC, PMC and PMRDA.`}
+        description={`${company.name}, led by ${company.founder} and ${company.coFounder.name}, is a Pune-based consultancy delivering integrated architecture, planning approvals, liaisoning and real estate solutions across PCMC, PMC and PMRDA.`}
         path="/about"
         pageType="AboutPage"
         keywords={aboutSeoKeywords}
-        jsonLd={[{
-          '@context': 'https://schema.org',
-          '@type': 'Person',
-          name: company.founder,
-          jobTitle: company.founderTitle,
-          worksFor: { '@id': `${SITE_URL}/#organization` }
-        }, breadcrumbJsonLd]}
+        jsonLd={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: company.founder,
+            jobTitle: company.founderTitle,
+            worksFor: { '@id': `${SITE_URL}/#organization` }
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: company.coFounder.name,
+            jobTitle: company.coFounder.title,
+            worksFor: { '@id': `${SITE_URL}/#organization` }
+          },
+          breadcrumbJsonLd
+        ]}
       />
       <PageHeader
         title={t('about.title')}
@@ -99,6 +109,31 @@ export default function About() {
           <p className="text-lg leading-9 text-muted">
             {company.founder} leads {company.name} with professional expertise spanning architecture, planning processes, liaisoning and property advisory, built through direct, client-focused coordination rather than layered handoffs. The approach favors transparency over shortcuts: clients see the real status of approvals, documentation and site decisions at every stage. That discipline extends to sustainability — designs and land-use recommendations are weighed for long-term durability, not just immediate approval, so the outcome holds value well beyond handover.
           </p>
+        </div>
+      </section>
+      <section className="border-y border-dark/10 bg-bg py-16 sm:py-24">
+        <div className="container-page">
+          <div className="grid gap-10 lg:grid-cols-[0.75fr_1fr] lg:items-start">
+            <div>
+              <p className="eyebrow">Co-founder</p>
+              <h2 className="serif-heading mt-3 text-5xl font-semibold">{company.coFounder.name}</h2>
+              <p className="mt-2 text-sm font-bold uppercase tracking-[0.16em] text-gold">{company.coFounder.title}</p>
+              <p className="mt-6 max-w-xl text-base leading-8 text-muted">{company.coFounder.introduction}</p>
+            </div>
+            <div>
+              <p className="eyebrow">Technical Leadership</p>
+              <h3 className="serif-heading mt-3 text-3xl font-semibold">Building the digital systems behind efficient delivery.</h3>
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                {company.coFounder.responsibilities.map((responsibility, index) => (
+                  <div key={responsibility} className="flex gap-4 border border-dark/12 bg-white p-5">
+                    <span className="serif-heading text-xl text-gold">{String(index + 1).padStart(2, '0')}</span>
+                    <p className="text-sm leading-7 text-muted">{responsibility}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-6 border-l-2 border-gold pl-5 text-base leading-8 text-dark/75">{company.coFounder.focus}</p>
+            </div>
+          </div>
         </div>
       </section>
       <PropertyLifecycle kicker="How We Work" title="The same disciplined lifecycle behind every Dreamspace engagement." variant="compact" />
