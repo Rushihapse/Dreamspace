@@ -28,6 +28,8 @@ export const company = {
   coFounder: {
     name: 'Rushikesh A. Hapse',
     title: 'Co-founder & Technical Director',
+    image: '/images/leadership/rushikesh-a-hapse.jpg',
+    imageAlt: 'Rushikesh A. Hapse, Co-founder and Technical Director at Dreamspace',
     initials: 'RH',
     introduction:
       'Rushikesh leads Dreamspace’s technical operations and digital infrastructure, bringing technology, IT management and process design together to build reliable systems that support the company’s day-to-day work and long-term growth.',

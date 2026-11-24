@@ -52,6 +52,7 @@ export default function About() {
             '@type': 'Person',
             name: company.coFounder.name,
             jobTitle: company.coFounder.title,
+            image: `${SITE_URL}${company.coFounder.image}`,
             worksFor: { '@id': `${SITE_URL}/#organization` }
           },
           breadcrumbJsonLd
@@ -137,7 +138,7 @@ function LeadershipProfile({ label, profile }) {
     <article className="border border-dark/12 bg-white p-6 shadow-[0_16px_50px_rgba(17,17,17,0.05)] sm:p-8 lg:p-10">
       <div className="grid gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
         <div className="lg:border-r lg:border-dark/10 lg:pr-10">
-          <div className="relative mb-7 aspect-[4/5] overflow-hidden border border-dark/12 bg-dark">
+          <div className="relative mb-7 aspect-square overflow-hidden border border-dark/12 bg-dark">
             {profile.image ? (
               <img
                 src={profile.image}
