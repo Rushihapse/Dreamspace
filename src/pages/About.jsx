@@ -44,6 +44,7 @@ export default function About() {
             '@type': 'Person',
             name: company.founder,
             jobTitle: company.founderTitle,
+            image: `${SITE_URL}${company.founderProfile.image}`,
             worksFor: { '@id': `${SITE_URL}/#organization` }
           },
           {
@@ -136,6 +137,25 @@ function LeadershipProfile({ label, profile }) {
     <article className="border border-dark/12 bg-white p-6 shadow-[0_16px_50px_rgba(17,17,17,0.05)] sm:p-8 lg:p-10">
       <div className="grid gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
         <div className="lg:border-r lg:border-dark/10 lg:pr-10">
+          <div className="relative mb-7 aspect-[4/5] overflow-hidden border border-dark/12 bg-dark">
+            {profile.image ? (
+              <img
+                src={profile.image}
+                alt={profile.imageAlt}
+                className="h-full w-full object-cover object-center"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div className="grid h-full place-items-center bg-[radial-gradient(circle_at_30%_25%,rgba(180,138,90,0.28),transparent_35%),linear-gradient(145deg,#242424,#111111)] text-white">
+                <div className="text-center">
+                  <span className="serif-heading text-7xl text-gold sm:text-8xl">{profile.initials}</span>
+                  <span className="mt-5 block text-sm font-semibold uppercase tracking-[0.22em] text-white/55">Dreamspace Leadership</span>
+                </div>
+              </div>
+            )}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/45 to-transparent" />
+          </div>
           <p className="eyebrow">{label}</p>
           <h3 className="serif-heading mt-3 text-4xl font-semibold sm:text-5xl">{profile.name}</h3>
           <p className="mt-2 text-sm font-bold uppercase leading-6 tracking-[0.16em] text-gold">{profile.title}</p>

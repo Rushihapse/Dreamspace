@@ -8,6 +8,9 @@ export const company = {
   founderProfile: {
     name: 'Ashitosh D. Chougule',
     title: 'Founder & Principal Consultant',
+    image: '/images/leadership/ashitosh-d-chougule.jpg',
+    imageAlt: 'Ashitosh D. Chougule, Founder and Principal Consultant at Dreamspace',
+    initials: 'AC',
     introduction:
       'Ashitosh leads Dreamspace’s architecture, planning, liaisoning and property advisory practice through direct, client-focused coordination and disciplined project leadership.',
     heading: 'Guiding projects from land potential to responsible delivery.',
@@ -25,6 +28,7 @@ export const company = {
   coFounder: {
     name: 'Rushikesh A. Hapse',
     title: 'Co-founder & Technical Director',
+    initials: 'RH',
     introduction:
       'Rushikesh leads Dreamspace’s technical operations and digital infrastructure, bringing technology, IT management and process design together to build reliable systems that support the company’s day-to-day work and long-term growth.',
     heading: 'Building the digital systems behind efficient delivery.',
